@@ -20,14 +20,6 @@ class RootContainer extends Component {
     fetch('/api/example')
       .then(res => res.json())
       .then(json => {
-        //const movies = res.data.data.children.map(obj => obj.data);
-        //console.log("hereerreee");
-        //var movies1 = json;
-        //console.log(json);;
-        //console.log(movies1);
-        //this.setState({ movies : json.movies });
-        console.log("in rooooot");
-        //console.log(movies);
         console.log("in rooot!");;
         this.setState({message: json.message});  /*this will cause an invoke of the render() function again */
         //this.setState({another: json.another});
