@@ -1,0 +1,23 @@
+# See http://help.github.com/ignore-files/ for more about ignoring files.
+
+# global
+# -----------
+
+# misc
+npm-debug.log
+
+# dependencies
+node_modules
+
+
+# client
+# -----------
+
+# testing
+client/node_modules
+
+# production
+client/build
+
+# server
+# -----------
