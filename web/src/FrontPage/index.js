@@ -26,7 +26,7 @@ class Frontpage extends Component {
   render() {
     return (
       <div className="FrontPage">
-        <h1>
+        {/*<h1>
           <span className="icon"><i className="fa fa-home"></i></span>
           &nbsp;
           the front page!
@@ -41,12 +41,21 @@ class Frontpage extends Component {
               click count: {this.state.clickCount}
             </div>
           </div>
+        </div> */}
+        <div className="columns is-multiline is-centered">
+          <div className="column is-one-quarter">
+            <img src={frustratedMonkey} alt="animated gif of a monkey shoving a laptop off the table" />
+          </div>
+          <div className="column is-one-quarter">
+            <img src={frustratedMonkey} alt="animated gif of a monkey shoving a laptop off the table" />
+          </div>
+          <div className="column is-one-quarter">
+            <img src={frustratedMonkey} alt="animated gif of a monkey shoving a laptop off the table" />
+          </div>
+          <div className="column is-one-quarter">
+            <img src={frustratedMonkey} alt="animated gif of a monkey shoving a laptop off the table" />
+          </div>
         </div>
-
-        <div>
-          <img src={frustratedMonkey} alt="animated gif of a monkey shoving a laptop off the table" />
-        </div>
-
       </div>
     );
   }
