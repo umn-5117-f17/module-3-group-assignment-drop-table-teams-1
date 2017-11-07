@@ -13,6 +13,19 @@ import ProfilePage from './ProfilePage';
 
 
 class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      text: ''
+    };
+    this.handleUserInput = this.handleUserInput.bind(this);
+  }
+
+  handleUserInput(inputText) {
+    this.setState({
+      inputText: inputText
+    });
+  };
 
   render() {
 
@@ -24,7 +37,7 @@ class App extends Component {
         <Header {...this.props} />
         <section className="section">
           <div className="content">
-            <Route exact path="/" component={FrontPage}/>
+            <Route exact path="/" component={props => <FrontPage inputText={this.state.inputText} onUserInput={this.handleUserInput} {... props} {...this.props} />}/>
             {/* send in props for router stuff; send in this.props for auth stuff */}
             <Route path="/api-demo" render={props => <ApiDemoPage {...props} {...this.props} />} />
             <Route path="/profile" render={props => <ProfilePage {...props} {...this.props} />} />
