@@ -28,8 +28,6 @@ class Frontpage extends Component {
   }
   dbpedia(event) {
     event.preventDefault();
-    // console.log(this.refs.TextInput.value);
-    // console.log("http://model.dbpedia-spotlight.org/en/annotate?text=" + encodeURI(this.refs.TextInput.value));
     fetch(
       "http://model.dbpedia-spotlight.org/en/annotate?text=" + encodeURI(this.refs.TextInput.value), {
       method: "GET",
