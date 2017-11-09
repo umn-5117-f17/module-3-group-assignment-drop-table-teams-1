@@ -6,8 +6,31 @@ class Dbpedia extends Component {
     this.state = {
       words = "",
       imgURL = ""
+      translation = ""
+      target_lang ="fr"
+      source_lang= "en"
+      translation = ""
     };
     this.dbpedia = this.dbpedia.bind(this);
+    this.Translate = this.Translate.bind(this);
+  }
+  Translate(e) {
+   e.preventDefault();
+   console.log(encodeURI(this.state.words));
+   const google_url =this.base_url +"?q="+ encodeURI(this.state.words)+"&target="+this.state.source_lang+"&source="+this.state.target_lang"&key=AIzaSyAllxK-KhFvNMtTqkA59tfUkQCGAYNHi5I";
+  // const google_url =this.base_url +"?q="+ encodeURI(this.refs.TextInput.value)+"&target=zh-CN&source=en&key=" + String(process.env.GCP_KEY);
+   fetch(google_url, {
+         method:"POST"})
+
+     .then(res => res.json())
+     .then(json => {
+
+       console.log(json);
+       this.setState({translation: json.TranslateTextResponseList});  /*this will cause an invoke of the render() function again */
+     })
+     .catch(function (error) {
+       console.log(error);
+     });
   }
 
   dbpedia(event) {
