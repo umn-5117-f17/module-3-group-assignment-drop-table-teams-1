@@ -43,7 +43,7 @@ class App extends Component {
             <Route path="/profile" render={props => <ProfilePage {...props} {...this.props} />} />
           </div>
         </section>
-        {/* <Footer /> */}
+        <Footer />
       </div>
     );
   }

@@ -14,8 +14,8 @@ class Frontpage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      clickCount: 0,
-      text: ""
+      words: "",
+      imgURL: ""
     };
     this.foo = this.foo.bind(this);
     this.dbpedia = this.dbpedia.bind(this);
@@ -26,6 +26,7 @@ class Frontpage extends Component {
       return {clickCount: prevState.clickCount + 1}
     })
   }
+
   dbpedia(event) {
     event.preventDefault();
     fetch(
@@ -33,39 +34,60 @@ class Frontpage extends Component {
       method: "GET",
       headers: {
         'Accept': 'application/json'
-      },
+      }
     })
     .then((response) => response.json())
-   .then((responseJson) => {
-      console.log(responseJson);
+    .then((responseJson) => {
+      let max = 0.0;
+      let similarPage = null;
+      let words = [];
+      responseJson.Resources.forEach((resource) => {
+        if (resource['@similarityScore'] > max){
+          max = resource['@similarityScore'];
+          similarPage = resource;
+        }
+        words.push(resource["@surfaceForm"]);
+      });
+      this.setState({words: words});
+      fetch(similarPage['@URI'],{
+        method: "GET",
+      })
+      .then((response) => response.text())
+      .then((text) => {
+        let re = new RegExp('(dbo:wikiPageID.+<\/span><small>)', 'i');
+        let wikiPageIdString = text.match(re)[0];
+        wikiPageIdString = wikiPageIdString.slice(0,-14);
+        let wikiPageId = wikiPageIdString.slice(wikiPageIdString.lastIndexOf('>')+1);
+
+        let proxyurl = "https://cors-anywhere.herokuapp.com/";
+
+        fetch(proxyurl + "http://en.wikipedia.org/?curid=" + wikiPageId, {
+          method: "GET",
+        })
+        .then((response) => response.text())
+        .then((text) => {
+          let re = new RegExp('(<meta property="og:image".+)', 'i');
+          let metaImg = text.match(re)[0];
+          let contentRe = new RegExp('(content=".+")', 'i');
+          let content = metaImg.match(contentRe)[0].slice(9,-1);
+          this.setState({imgURL: content});
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+      })
+      .catch((error) => {
+        console.error(error);
+      });
     })
     .catch((error) => {
       console.error(error);
     });
-    // this.props.onUserInput(
-    //   this.refs.TextInput.value
-    // );
   }
 
   render() {
     return (
       <div className="FrontPage">
-        {/*<h1>
-          <span className="icon"><i className="fa fa-home"></i></span>
-          &nbsp;
-          the front page!
-        </h1>
-
-        <div className="level">
-          <div className="level-left">
-            <div className="level-item">
-              <button className="button" onClick={this.foo}>example button</button>
-            </div>
-            <div className="level-item" style={countStyle}>
-              click count: {this.state.clickCount}
-            </div>
-          </div>
-        </div> */}
         <form>
           <input
             type="text"
@@ -75,20 +97,8 @@ class Frontpage extends Component {
           />
           <button onClick={this.dbpedia}>DBPEDIA</button>
         </form>
-        {/*<div className="columns is-multiline is-centered">
-          <div className="column is-one-quarter">
-            <img src={frustratedMonkey} alt="animated gif of a monkey shoving a laptop off the table" />
-          </div>
-          <div className="column is-one-quarter">
-            <img src={frustratedMonkey} alt="animated gif of a monkey shoving a laptop off the table" />
-          </div>
-          <div className="column is-one-quarter">
-            <img src={frustratedMonkey} alt="animated gif of a monkey shoving a laptop off the table" />
-          </div>
-          <div className="column is-one-quarter">
-            <img src={frustratedMonkey} alt="animated gif of a monkey shoving a laptop off the table" />
-          </div>
-        </div>*/}
+        <pre>{JSON.stringify(this.state)}</pre>
+        <pre><img src={this.state.imgURL} alt="Placeholder Text"/></pre>
       </div>
     );
   }

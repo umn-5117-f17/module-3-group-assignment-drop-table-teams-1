@@ -7,7 +7,7 @@ const fetch = require('node-fetch');
 // simple API call, no authentication or user info
 router.get('/unprotected', function(req, res, next) {
 
-  req.db.collection('max_todo').find().toArray(function(err, results) {
+  req.db.collection('Collections').find().toArray(function(err, results) {
     if (err) {
       next(err);
     }
@@ -22,7 +22,7 @@ router.get('/unprotected', function(req, res, next) {
 // checkJwt middleware will enforce valid authorization token
 router.get('/protected', checkJwt, function(req, res, next) {
 
-  req.db.collection('max_todo').find().toArray(function(err, results) {
+  req.db.collection('Notecards').find().toArray(function(err, results) {
     if (err) {
       next(err);
     }
