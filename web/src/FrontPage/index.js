@@ -17,20 +17,13 @@ class Frontpage extends Component {
       words: "",
       imgURL: ""
     };
-    this.foo = this.foo.bind(this);
     this.dbpedia = this.dbpedia.bind(this);
-  }
-
-  foo() {
-    this.setState(prevState => {
-      return {clickCount: prevState.clickCount + 1}
-    })
   }
 
   dbpedia(event) {
     event.preventDefault();
     fetch(
-      "http://model.dbpedia-spotlight.org/en/annotate?text=" + encodeURI(this.refs.TextInput.value), {
+      "http://model.dbpedia-spotlight.org/en/annotate?text=" + encodeURI(event.target.textInput.value), {
       method: "GET",
       headers: {
         'Accept': 'application/json'
@@ -88,14 +81,9 @@ class Frontpage extends Component {
   render() {
     return (
       <div className="FrontPage">
-        <form>
-          <input
-            type="text"
-            placeholder="Search..."
-            value={this.props.inputText}
-            ref="TextInput"
-          />
-          <button onClick={this.dbpedia}>DBPEDIA</button>
+        <form onSubmit={this.dbpedia}>
+          <textarea value={this.state.text} name="textInput">This is a spot for text</textarea>
+          <input type="submit" value="Dbpedia"/>
         </form>
         <pre>{JSON.stringify(this.state)}</pre>
         <pre><img src={this.state.imgURL} alt="Placeholder Text"/></pre>

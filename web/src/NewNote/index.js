@@ -82,4 +82,4 @@ class Dbpedia extends Component {
   }
 }
 
-export default Dbpedia;
+export default NewNote;
