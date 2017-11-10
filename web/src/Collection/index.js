@@ -54,6 +54,9 @@ class Collection extends Component {
             </tr>
               {this.props.messageFromServer.notes}
             </table>
+            <div className="newNote">
+              <a href="/notecard"><p className="button is-small is-info">Create a New Note</p></a>
+            </div>
           </div>);
     } else {
       return null;

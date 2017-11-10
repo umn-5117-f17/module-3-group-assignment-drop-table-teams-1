@@ -24,7 +24,7 @@ router.get('/notecards/:collect', function(req, res) {
   var collectionId = req.params.collect;
 
   req.db.collection('Notecards').find({'collection': collectionId}).toArray(function(err, results) {
-    console.log(results);
+    // console.log(results);
     res.send({noteCards: results});
   });
 });
@@ -33,11 +33,32 @@ router.post('/newCollection', function(req, res) {
   console.log("in new collection server");
   // console.log(req.body);
   var newItem = {
-    isPrivate: req.body.isPrivate,
+    privacy: req.body.isPrivate,
     name: req.body.collectionName,
+    star: false,
+    originalLanguage: "",
+    endingLanguage: ""
   };
   // mongo call to insert newItem
   req.db.collection('Collections').insertOne(newItem, function(err, results) {
+    //res.status(200).send('success');
+  });
+});
+
+router.post('/newNote', function(req,res) {
+  console.log("in new note server");
+
+  var newItem = {
+    star: false,
+    collection: req.body.collection,
+    text: req.body.text,
+    translation: req.body.translation,
+    picture: req.body.picture,
+    originalLanguage: req.body.originalLanguage,
+    endingLanguage: req.body.endingLanguage
+  }
+
+  req.db.collection('Notecards').insertOne(newItem, function(err, results) {
     //res.status(200).send('success');
   });
 });
