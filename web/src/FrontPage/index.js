@@ -15,9 +15,34 @@ class Frontpage extends Component {
     super(props);
     this.state = {
       words: "",
-      imgURL: ""
+      imgURL: "",
+      source_lang:"en",
+      target_lang :"fr",
+      translated_words:[]
     };
     this.dbpedia = this.dbpedia.bind(this);
+    this.translate = this.translate.bind(this);
+  }
+
+
+  translate(event) {
+    event.preventDefault();
+    const base_url = 'https://translation.googleapis.com/language/translate/v2';
+    const google_url = base_url +"?q="+encodeURI(this.state.words)+
+                       "&target="+this.state.target_lang+"&source="
+                       +this.state.source_lang+"&key=AIzaSyAllxK-KhFvNMtTqkA59tfUkQCGAYNHi5I";
+
+    fetch(google_url, {
+          method:"POST"})
+          .then(res => res.json())
+          .then(json => {
+          console.log(json.data.translations);
+          this.setState({translated_words: json.data.translations});  /*this will cause an invoke of the render() function again */
+                         })
+          .catch(function (error) {
+          console.log(error);
+                         });
+
   }
 
   dbpedia(event) {
@@ -64,6 +89,7 @@ class Frontpage extends Component {
           let contentRe = new RegExp('(content=".+")', 'i');
           let content = metaImg.match(contentRe)[0].slice(9,-1);
           this.setState({imgURL: content});
+          this.translate(event);
         })
         .catch((error) => {
           console.error(error);
@@ -76,6 +102,8 @@ class Frontpage extends Component {
     .catch((error) => {
       console.error(error);
     });
+
+
   }
 
   render() {
@@ -85,6 +113,7 @@ class Frontpage extends Component {
           <textarea value={this.state.text} name="textInput">This is a spot for text</textarea>
           <input type="submit" value="Dbpedia"/>
         </form>
+        <button type="button" className="translate btn" onClick={this.translate}></button>
         <pre>{JSON.stringify(this.state)}</pre>
         <pre><img src={this.state.imgURL} alt="Placeholder Text"/></pre>
       </div>

@@ -13,6 +13,7 @@ import ProfilePage from './ProfilePage';
 import Dbpedia from './Dbpedia';
 import NewNote from './NewNote';
 
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -38,7 +39,13 @@ class App extends Component {
         <Header {...this.props} />
         <section className="section">
           <div className="content">
+<<<<<<< HEAD
             <Route exact path="/" component={props => <NewNote {... props} {...this.props} />}/>
+=======
+          /*  <Route exact path="/" component={props => <FrontPage inputText={this.state.inputText} onUserInput={this.handleUserInput} {... props} {...this.props} />}/> */
+            <Route exact path="/" component={props => <FrontPage inputText={this.state.inputText} onUserInput={this.handleUserInput} {... props} {...this.props} />}/>
+
+>>>>>>> cc4dc331473a04be346f7ce44f83a94b8b5c7ca2
             {/* send in props for router stuff; send in this.props for auth stuff */}
             <Route path="/api-demo" render={props => <ApiDemoPage {...props} {...this.props} />} />
             <Route path="/profile" render={props => <ProfilePage {...props} {...this.props} />} />
