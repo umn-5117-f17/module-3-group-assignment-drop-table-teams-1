@@ -6,29 +6,43 @@ class Dbpedia extends Component {
     this.state = {
       words: "",
       imgURL: "",
-      translation: "",
-      target_lang: "fr",
-      source_lang: "en"
+      source_lang:"en",
+      target_lang :"",
+      translated_words:[]
     };
-    this.dbpedia = this.dbpedia.bind(this);
-    this.Translate = this.Translate.bind(this);
-  }
-  Translate() {
-    let space_words = this.state.words.join(' ');
-    let base_url = 'https://translation.googleapis.com/language/translate/v2'
-   const google_url = base_url +"?q="+ encodeURI(this.state.words[0])+"&target=zh-CN&source=en"+"&key=AIzaSyAllxK-KhFvNMtTqkA59tfUkQCGAYNHi5I";
-  console.log(google_url);
-   fetch(google_url, {
-         method:"POST"})
-     .then(res => res.json())
-     .then(json => {
 
-       console.log(json);
-       this.setState({translation: json.TranslateTextResponseList});  /*this will cause an invoke of the render() function again */
-     })
-     .catch(function (error) {
-       console.log(error);
-     });
+    this.dbpedia = this.dbpedia.bind(this);
+    this.translate = this.translate.bind(this);
+  }
+
+  componentDidMount() {
+    console.log('FOO');
+    console.log("stringify props")
+    console.log(JSON.stringify(this.props.target_lang));
+    let t_lang = this.props.target_lang;
+    this.setState({target_lang: t_lang});
+  }
+
+
+  translate(event) {
+    event.preventDefault();
+    let t_lang = this.props.target_lang;
+    this.setState({target_lang: t_lang});
+    const base_url = 'https://translation.googleapis.com/language/translate/v2';
+    const google_url = base_url +"?q="+encodeURI(this.state.words)+
+                       "&target="+this.state.target_lang+"&source="
+                       +this.state.source_lang+"&key=AIzaSyAllxK-KhFvNMtTqkA59tfUkQCGAYNHi5I";
+
+    fetch(google_url, {
+          method:"POST"})
+          .then(res => res.json())
+          .then(json => {
+          this.setState({translated_words: json});  /*this will cause an invoke of the render() function again */
+                         })
+          .catch(function (error) {
+          console.log(error);
+                         });
+
   }
 
   dbpedia(event) {
@@ -53,6 +67,7 @@ class Dbpedia extends Component {
         words.push(resource["@surfaceForm"]);
       });
       this.setState({words: words});
+      console.log(words);
       fetch(similarPage['@URI'],{
         method: "GET",
       })
@@ -75,7 +90,7 @@ class Dbpedia extends Component {
           let contentRe = new RegExp('(content=".+")', 'i');
           let content = metaImg.match(contentRe)[0].slice(9,-1);
           this.setState({imgURL: content});
-          this.Translate();
+          this.translate(event);
         })
         .catch((error) => {
           console.error(error);
@@ -89,20 +104,22 @@ class Dbpedia extends Component {
       console.error(error);
     });
 
+
   }
 
   render() {
     return (
-      <div className="TestDbpediaPage">
+      <div className="FrontPage">
         <form onSubmit={this.dbpedia}>
           <textarea value={this.state.text} name="textInput">This is a spot for text</textarea>
-          <input type="submit" value="Dbpedia" onClick={this.translate}/>
+          <input type="submit" value="Dbpedia"/>
         </form>
+        <button type="button" className="translate btn" onClick={this.translate}></button>
         <pre>{JSON.stringify(this.state)}</pre>
         <pre><img src={this.state.imgURL} alt="Placeholder Text"/></pre>
       </div>
     );
   }
-}
+  }
 
 export default Dbpedia;

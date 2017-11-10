@@ -17,7 +17,7 @@ class Frontpage extends Component {
       words: "",
       imgURL: "",
       source_lang:"en",
-      target_lang :"fr",
+      target_lang :"zh-CN",
       translated_words:[]
     };
     this.dbpedia = this.dbpedia.bind(this);
@@ -36,8 +36,7 @@ class Frontpage extends Component {
           method:"POST"})
           .then(res => res.json())
           .then(json => {
-          console.log(json.data.translations);
-          this.setState({translated_words: json.data.translations});  /*this will cause an invoke of the render() function again */
+          this.setState({translated_words: json});  /*this will cause an invoke of the render() function again */
                          })
           .catch(function (error) {
           console.log(error);
@@ -67,6 +66,7 @@ class Frontpage extends Component {
         words.push(resource["@surfaceForm"]);
       });
       this.setState({words: words});
+      console.log(words);
       fetch(similarPage['@URI'],{
         method: "GET",
       })
