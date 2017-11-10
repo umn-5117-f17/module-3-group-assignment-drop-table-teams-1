@@ -17,7 +17,6 @@ class Dbpedia extends Component {
     let space_words = this.state.words.join(' ');
     let base_url = 'https://translation.googleapis.com/language/translate/v2'
    const google_url = base_url +"?q="+ encodeURI(this.state.words[0])+"&target=zh-CN&source=en"+"&key=AIzaSyAllxK-KhFvNMtTqkA59tfUkQCGAYNHi5I";
-  // const google_url =this.base_url +"?q="+ encodeURI(this.refs.TextInput.value)+"&target=zh-CN&source=en&key=" + String(process.env.GCP_KEY);
   console.log(google_url);
    fetch(google_url, {
          method:"POST"})
