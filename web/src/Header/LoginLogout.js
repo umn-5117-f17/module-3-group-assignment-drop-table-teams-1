@@ -15,13 +15,13 @@ class LoginLogout extends Component {
   }
 
   render() {
-
-    const userDisplay = this.isLoggedIn()
+    // eslint-disable-next-line
+    {/*const userDisplay = this.isLoggedIn()
       ? (
         <div className="navbar-item">
           <span>{this.props.profile.name}</span>
         </div>
-      ) : null;
+      ) : null; */}
 
     const loginLogoutButton = this.isLoggedIn()
       ? (
@@ -35,12 +35,8 @@ class LoginLogout extends Component {
       );
 
     return (
-      <div className="navbar-end">
-        {userDisplay}
-
-        <div className="navbar-item">
-          {loginLogoutButton}
-        </div>
+      <div className="navbar-start">
+        {loginLogoutButton}
       </div>
     )
   }

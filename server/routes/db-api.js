@@ -6,7 +6,7 @@ const fetch = require('node-fetch');
 
 // simple API call, no authentication or user info
 router.get('/unprotected', function(req, res, next) {
-  console.log("here in unprotected");
+
   req.db.collection('Collections').find().toArray(function(err, results) {
     if (err) {
       next(err);
