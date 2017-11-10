@@ -1,3 +1,21 @@
 .FrontPage .the-logo {
   max-width: 200px;
 }
+
+.addCollection {
+    margin: auto;
+    width: 33%;
+    padding: 20px;
+}
+
+.input {
+  display: inline;
+}
+
+.label {
+  display: inline-block;
+}
+
+.newCollect {
+  display: inline-block;
+}

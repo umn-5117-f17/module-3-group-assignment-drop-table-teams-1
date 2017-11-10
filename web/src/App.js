@@ -7,6 +7,7 @@ import Footer from './Footer';
 import FrontPage from './FrontPage';
 import Header from './Header';
 import ProfilePage from './ProfilePage';
+import Collection from './Collection';
 
 class App extends Component {
 
@@ -30,6 +31,7 @@ class App extends Component {
 
             <Route path="/profile" render={props => <ProfilePage {...props} {...this.props} />} />
 
+            <Route path="/Collection/:collectionId" component={Collection}/>
           </div>
         </section>
 
