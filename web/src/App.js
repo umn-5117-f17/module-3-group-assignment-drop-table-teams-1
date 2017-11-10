@@ -12,6 +12,7 @@ import Header from './Header';
 import ProfilePage from './ProfilePage';
 
 
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -37,7 +38,9 @@ class App extends Component {
         <Header {...this.props} />
         <section className="section">
           <div className="content">
+          /*  <Route exact path="/" component={props => <FrontPage inputText={this.state.inputText} onUserInput={this.handleUserInput} {... props} {...this.props} />}/> */
             <Route exact path="/" component={props => <FrontPage inputText={this.state.inputText} onUserInput={this.handleUserInput} {... props} {...this.props} />}/>
+
             {/* send in props for router stuff; send in this.props for auth stuff */}
             <Route path="/api-demo" render={props => <ApiDemoPage {...props} {...this.props} />} />
             <Route path="/profile" render={props => <ProfilePage {...props} {...this.props} />} />
