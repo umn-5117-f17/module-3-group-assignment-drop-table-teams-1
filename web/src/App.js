@@ -6,11 +6,11 @@ import { withAuth } from './Auth';
 import ApiDemoPage from './ApiDemoPage';
 // eslint-disable-next-line
 import Footer from './Footer';
+// eslint-disable-next-line
 import FrontPage from './FrontPage';
 import Header from './Header';
 // eslint-disable-next-line
 import ProfilePage from './ProfilePage';
-import Dbpedia from './Dbpedia';
 import NewNote from './NewNote';
 import Collection from './Collection';
 
