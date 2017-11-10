@@ -12,6 +12,7 @@ import Header from './Header';
 import ProfilePage from './ProfilePage';
 import Dbpedia from './Dbpedia';
 import NewNote from './NewNote';
+import Collection from './Collection';
 
 
 class App extends Component {
@@ -43,6 +44,11 @@ class App extends Component {
             {/* send in props for router stuff; send in this.props for auth stuff */}
             <Route path="/api-demo" render={props => <ApiDemoPage {...props} {...this.props} />} />
             <Route path="/profile" render={props => <ProfilePage {...props} {...this.props} />} />
+<<<<<<< HEAD
+=======
+
+            <Route path="/Collection/:collectionId" component={Collection}/>
+>>>>>>> origin/mccro016_branch
           </div>
         </section>
       </div>
