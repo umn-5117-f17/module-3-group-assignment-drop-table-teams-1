@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+var ObjectId = require('mongodb').ObjectId;
 
 const checkJwt = require('../auth').checkJwt;
 const fetch = require('node-fetch');
@@ -66,11 +67,20 @@ router.post('/newNote', function(req,res) {
 router.get('/collections', function(req, res) {
   console.log("in the server collections");
 
-  req.db.collection('Collections').find({privacy: false}).toArray(function(err, results) {
+  req.db.collection('Collections').find().toArray(function(err, results) {
     // console.log(results);
     res.send({collections: results});
   });
 });
+
+router.post('/deleteNote', function(req, res) {
+  var note = req.body.Id;
+
+  req.db.collection('Notecards').deleteOne({"_id": ObjectId(note)},function(err, results){
+      //send success status to client side
+      res.status(200).send('success');
+    });
+})
 
 router.get('/myCollections', function(req, res) {
   console.log("in the server collections");
