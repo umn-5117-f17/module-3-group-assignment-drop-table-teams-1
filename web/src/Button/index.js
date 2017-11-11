@@ -6,12 +6,27 @@ class Buttons extends Component {
     this.state = {
       test: null
     }
-
-    // this.saveNote = this.saveNote.bind(this);
+    this.saveNote = this.saveNote.bind(this);
+    this.editNote = this.editNote.bind(this);
+    this.deleteNote = this.deleteNote.bind(this);
+    this.anotherOne = this.anotherOne.bind(this);
   }
-  // saveNote() {
-  //   fetch('/api/save');
-  // }
+
+  saveNote() {
+    console.log("Note has been saved.");
+  }
+
+  editNote() {
+    console.log("Note edits have been saved.");
+  }
+
+  deleteNote() {
+    console.log("Note has been deleted");
+  }
+
+  anotherOne() {
+    console.log("Note has been created.");
+  }
 
   render() {
     return (

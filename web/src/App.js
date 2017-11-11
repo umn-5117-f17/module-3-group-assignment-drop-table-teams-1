@@ -6,13 +6,18 @@ import { withAuth } from './Auth';
 import ApiDemoPage from './ApiDemoPage';
 // eslint-disable-next-line
 import Footer from './Footer';
+// eslint-disable-next-line
 import FrontPage from './FrontPage';
 import Header from './Header';
 // eslint-disable-next-line
 import ProfilePage from './ProfilePage';
+<<<<<<< HEAD
 import Dbpedia from './Dbpedia';
 
+=======
+>>>>>>> wang4860_newnote
 import NewNote from './NewNote';
+import Collection from './Collection';
 
 
 class App extends Component {
@@ -40,15 +45,20 @@ class App extends Component {
         <Header {...this.props} />
         <section className="section">
           <div className="content">
+<<<<<<< HEAD
           /*  <Route exact path="/" component={props => <FrontPage inputText={this.state.inputText} onUserInput={this.handleUserInput} {... props} {...this.props} />}/> */
             <Route exact path="/" component={props => <NewNote inputText={this.state.inputText} onUserInput={this.handleUserInput} {... props} {...this.props} />}/>
 
+=======
+            <Route exact path="/" component={props => <NewNote {... props} {...this.props} />}/>
+>>>>>>> wang4860_newnote
             {/* send in props for router stuff; send in this.props for auth stuff */}
             <Route path="/api-demo" render={props => <ApiDemoPage {...props} {...this.props} />} />
             <Route path="/profile" render={props => <ProfilePage {...props} {...this.props} />} />
+
+            <Route path="/Collection/:collectionId" component={Collection}/>
           </div>
         </section>
-        {/*<Footer />*/}
       </div>
     );
   }
