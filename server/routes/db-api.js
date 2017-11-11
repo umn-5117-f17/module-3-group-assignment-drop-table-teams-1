@@ -31,7 +31,7 @@ router.get('/notecards/:collect', function(req, res) {
 
 router.post('/newCollection', function(req, res) {
   console.log("in new collection server");
-  // console.log(req.body);
+   // console.log(req.user);
   var newItem = {
     privacy: req.body.isPrivate,
     name: req.body.collectionName,
@@ -66,7 +66,16 @@ router.post('/newNote', function(req,res) {
 router.get('/collections', function(req, res) {
   console.log("in the server collections");
 
-  req.db.collection('Collections').find().toArray(function(err, results) {
+  req.db.collection('Collections').find({privacy: false}).toArray(function(err, results) {
+    // console.log(results);
+    res.send({collections: results});
+  });
+});
+
+router.get('/myCollections', function(req, res) {
+  console.log("in the server collections");
+
+  req.db.collection('Collections').find({user: req.user.nickname}).toArray(function(err, results) {
     // console.log(results);
     res.send({collections: results});
   });

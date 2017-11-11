@@ -28,6 +28,9 @@ class Header extends Component {
               <a className="navbar-item">
                 New Note
               </a>
+              <a className="navbar-item" href="/myCollections">
+                My Collections
+              </a>
               <a className="navbar-item">
                 Browse Collections
               </a>
