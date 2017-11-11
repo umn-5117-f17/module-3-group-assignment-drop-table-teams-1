@@ -90,7 +90,7 @@ class Dbpedia extends Component {
             annotations[key] = content;
             this.setState({annotations: annotations});
             console.log(Object.keys(this.state.annotations).join(' '));
-            // this.translate(event);
+            this.translate(event);
           })
           .catch((error) => {
             console.error(error);
@@ -122,13 +122,14 @@ class Dbpedia extends Component {
                     return (
                       <tr key={key}>
                         <td>{key}</td>
-                        <td><img src={this.state.annotations[key]} alt="" /></td>
+                        <td><img src={this.state.annotations[key]} alt="" height="200px"/></td>
                       </tr>
             )})}
           </tbody>
         </table>
         <pre>{JSON.stringify(this.state.words)}</pre>
         <pre>{JSON.stringify(this.state.annotations)}</pre>
+        <pre>{JSON.stringify(this.state.translated_words)}</pre>
         {/*<pre><img src={this.state} alt="Placeholder Text"/></pre>*/}
       </div>
     );
