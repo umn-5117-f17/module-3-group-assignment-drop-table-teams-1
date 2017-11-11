@@ -5,26 +5,11 @@ import './frontpage.css';
 
 
 class Frontpage extends Component {
-<<<<<<< HEAD
-
-  constructor(props) {
-    super(props);
-    this.state = {
-      words: "",
-      imgURL: "",
-      source_lang:"en",
-      target_lang :"zh-CN",
-      translated_words:[]
-    };
-    this.dbpedia = this.dbpedia.bind(this);
-    this.translate = this.translate.bind(this);
-=======
   constructor() {
     super();
     this.state = { isPrivate: false, collectionName:'', collections: '' }
     this.handleClick = this.handleClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
->>>>>>> wang4860_newnote
   }
 
   componentDidMount() {
@@ -66,17 +51,9 @@ class Frontpage extends Component {
         fetch('/api/db/collections')
           .then(res => res.json())
           .then(json => {
-<<<<<<< HEAD
-          this.setState({translated_words: json});  /*this will cause an invoke of the render() function again */
-                         })
-          .catch(function (error) {
-          console.log(error);
-                         });
-=======
             console.log(json);
             var collects = json.collections;
             const collectItems = collects.map((collect) =>
->>>>>>> wang4860_newnote
 
             <div class="column is-one-third" id={collect.name}>
             <a href={"/Collection/" + collect.name} className="box">
@@ -93,47 +70,10 @@ class Frontpage extends Component {
       event.preventDefault();
   }
 
-<<<<<<< HEAD
-  dbpedia(event) {
-    event.preventDefault();
-    fetch(
-      "http://model.dbpedia-spotlight.org/en/annotate?text=" + encodeURI(event.target.textInput.value), {
-      method: "GET",
-      headers: {
-        'Accept': 'application/json'
-      }
-    })
-    .then((response) => response.json())
-    .then((responseJson) => {
-      let max = 0.0;
-      let similarPage = null;
-      let words = [];
-      responseJson.Resources.forEach((resource) => {
-        if (resource['@similarityScore'] > max){
-          max = resource['@similarityScore'];
-          similarPage = resource;
-        }
-        words.push(resource["@surfaceForm"]);
-      });
-      this.setState({words: words});
-      console.log(words);
-      fetch(similarPage['@URI'],{
-        method: "GET",
-      })
-      .then((response) => response.text())
-      .then((text) => {
-        let re = new RegExp('(dbo:wikiPageID.+<\/span><small>)', 'i');
-        let wikiPageIdString = text.match(re)[0];
-        wikiPageIdString = wikiPageIdString.slice(0,-14);
-        let wikiPageId = wikiPageIdString.slice(wikiPageIdString.lastIndexOf('>')+1);
-
-        let proxyurl = "https://cors-anywhere.herokuapp.com/";
-=======
   handleInputChange(event) {
   const target = event.target;
   const value = target.type === 'checkbox' ? target.checked : target.value;
   const name = target.name;
->>>>>>> wang4860_newnote
 
   this.setState({
     [name]: value
