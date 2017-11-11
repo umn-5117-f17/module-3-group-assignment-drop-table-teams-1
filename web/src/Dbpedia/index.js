@@ -4,8 +4,6 @@ class Dbpedia extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      words: "",
-      translation: "",
       target_lang: "fr",
       source_lang: "en",
       annotations: "",
@@ -17,33 +15,35 @@ class Dbpedia extends Component {
   }
 
   componentDidMount() {
-    console.log('FOO');
-    console.log("stringify props")
-    console.log(JSON.stringify(this.props.target_lang));
     let t_lang = this.props.target_lang;
     this.setState({target_lang: t_lang});
   }
 
 
-  translate(event) {
-    event.preventDefault();
+  translate() {
     let t_lang = this.props.target_lang;
     this.setState({target_lang: t_lang});
     const base_url = 'https://translation.googleapis.com/language/translate/v2';
-    const google_url = base_url +"?q="+encodeURI(this.state.words)+
-                       "&target="+this.state.target_lang+"&source="
-                       +this.state.source_lang+"&key=AIzaSyAllxK-KhFvNMtTqkA59tfUkQCGAYNHi5I";
-
-    fetch(google_url, {
-          method:"POST"})
-          .then(res => res.json())
-          .then(json => {
-          this.setState({translated_words: json});  /*this will cause an invoke of the render() function again */
-                         })
-          .catch(function (error) {
-          console.log(error);
-                         });
-
+    Object.keys(this.state.annotations).map((word) => {
+      const google_url = base_url +"?q="+encodeURI(word)+
+                         "&target="+this.state.target_lang+"&source="
+                         +this.state.source_lang+"&key=AIzaSyAllxK-KhFvNMtTqkA59tfUkQCGAYNHi5I";
+      fetch(google_url, {
+            method:"POST"})
+            .then(res => res.json())
+            .then(json => {
+              if(this.state.annotations[word].length !== 2){
+                let newAnnotations = {};
+                Object.assign(newAnnotations, this.state.annotations);
+                newAnnotations[word].push(json.data.translations[0].translatedText);
+                this.setState({test: newAnnotations});
+              }
+            })
+            .catch(function (error) {
+              console.error(error);
+            });
+      return null;
+    });
   }
 
   dbpedia(event) {
@@ -63,7 +63,6 @@ class Dbpedia extends Component {
           annotations[resource["@surfaceForm"]] = [resource["@URI"]];
         }
       });
-      this.setState({words: Object.keys(annotations)});
       this.setState({annotations: annotations});
       Object.keys(annotations).map((key) => {
         fetch(annotations[key],{
@@ -87,10 +86,9 @@ class Dbpedia extends Component {
             let metaImg = text.match(re)[0];
             let contentRe = new RegExp('(content=".+")', 'i');
             let content = metaImg.match(contentRe)[0].slice(9,-1);
-            annotations[key] = content;
+            annotations[key] = [content];
             this.setState({annotations: annotations});
-            console.log(Object.keys(this.state.annotations).join(' '));
-            this.translate(event);
+            this.translate();
           })
           .catch((error) => {
             console.error(error);
@@ -105,8 +103,6 @@ class Dbpedia extends Component {
     .catch((error) => {
       console.error(error);
     });
-
-
   }
 
   render() {
@@ -122,15 +118,14 @@ class Dbpedia extends Component {
                     return (
                       <tr key={key}>
                         <td>{key}</td>
-                        <td><img src={this.state.annotations[key]} alt="" height="200px"/></td>
+                        <td><img src={this.state.annotations[key][0]} alt="" height="200"/></td>
                       </tr>
             )})}
           </tbody>
         </table>
-        <pre>{JSON.stringify(this.state.words)}</pre>
+        <pre>{JSON.stringify(Object.keys(this.state.annotations))}</pre>
         <pre>{JSON.stringify(this.state.annotations)}</pre>
-        <pre>{JSON.stringify(this.state.translated_words)}</pre>
-        {/*<pre><img src={this.state} alt="Placeholder Text"/></pre>*/}
+        <pre>{JSON.stringify(this.state)}</pre>
       </div>
     );
   }

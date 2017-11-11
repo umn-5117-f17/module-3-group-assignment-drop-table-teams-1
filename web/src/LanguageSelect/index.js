@@ -3,11 +3,10 @@ import React, { Component } from 'react';
 class LanguageSelect extends Component {
   constructor(props) {
     super(props);
-    this.doSetNoteTargetLang = this.doSetNoteTargetLang.bind(this);
     this.state = {
-      target_lang :"",
-
+      target_lang :"af"
     };
+    this.doSetNoteTargetLang = this.doSetNoteTargetLang.bind(this);
 
     this.handleInputChange = this.handleInputChange.bind(this);
     this.doSetNoteTargetLang = this.doSetNoteTargetLang.bind(this);
@@ -16,10 +15,7 @@ class LanguageSelect extends Component {
 
 
   doSetNoteTargetLang(){
-    // console.log("child");
-    // console.log(JSON.stringify(this.state));
     this.props.setTargetLang(this.state.target_lang);
-    //this.setState({target_lang:""});
   }
 
   handleInputChange(event) {
