@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
 //import { Link } from 'react-router-dom';
 import './Collection.css';
+import ModalContainer from '../ModalContainer';
 import trash from './rubbish-bin.png';
-
-
 
 
 class NotecardList extends Component {
@@ -36,13 +35,12 @@ class NotecardList extends Component {
             console.log(json);
             var notecards = json.noteCards;
             var collectionTitle = this.props.match.params.collectionId;
-            const noteItems = notecards.map((note) =>
+            const noteItems = notecards.map((note) => {
               <tr>
-                <td><a href={"/notecard/" + note._id}>{note.text}</a></td>
                 <td>{note.translation}</td>
                 <td id={note._id}><a id={note._id} onClick={this.handleDelete}><img id={note._id} src={trash} alt="delete button"/></a></td>
               </tr>
-                );
+            });
             this.setState({notes: noteItems});  /*this will cause an invoke of the render() function again */
             this.setState({title: collectionTitle});
           })
@@ -59,14 +57,14 @@ class NotecardList extends Component {
         console.log(json);
         var notecards = json.noteCards;
         var collectionTitle = this.props.match.params.collectionId;
-        const noteItems = notecards.map((note) =>
-          <tr>
-            <td><a href={"/notecard/" + note._id}>{note.text}</a></td>
-            <td>{note.translation}</td>
-            <td id={note._id}><a id={note._id} onClick={this.handleDelete}><img id={note._id} src={trash} alt="delete button"/></a></td>
-          </tr>
-            );
-        this.setState({notes: noteItems});  /*this will cause an invoke of the render() function again */
+        // const noteItems = notecards.map((note) =>
+          // <tr>
+          //   <td>{note.text}</td>
+          //   <td>{note.translation}</td>
+          //   <td id={note._id}><a id={note._id} onClick={this.handleDelete}><img id={note._id} src={trash} alt="delete button"/></a></td>
+          // </tr>
+        // );
+        // this.setState({notes: noteItems});  /*this will cause an invoke of the render() function again */
         this.setState({title: collectionTitle});
       })
       .catch(function (error) {
@@ -81,6 +79,7 @@ class NotecardList extends Component {
       return (
           <div className="Collection">
           <h1 className="title">{this.state.title}</h1>
+            <ModalContainer />
             <table>
             <thead>
             <tr>
@@ -89,7 +88,6 @@ class NotecardList extends Component {
             </tr>
             </thead>
             <tbody>
-
               {this.state.notes}
               </tbody>
             </table>
