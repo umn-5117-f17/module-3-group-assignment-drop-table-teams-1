@@ -6,9 +6,13 @@ import trash from './rubbish-bin.png';
 
 
 class NotecardList extends Component {
-  constructor() {
-    super();
-    this.state = { title: '', notes: '' }
+  constructor(props) {
+    super(props);
+    this.state = { title: '',
+                   notes: '',
+                   modal_notes: []
+
+   }
     this.handleDelete = this.handleDelete.bind(this);
   }
 
@@ -56,6 +60,9 @@ class NotecardList extends Component {
       .then(json => {
         console.log(json);
         var notecards = json.noteCards;
+        console.log("note caard check");
+        console.log(notecards);
+
         var collectionTitle = this.props.match.params.collectionId;
         // const noteItems = notecards.map((note) =>
           // <tr>
@@ -66,6 +73,7 @@ class NotecardList extends Component {
         // );
         // this.setState({notes: noteItems});  /*this will cause an invoke of the render() function again */
         this.setState({title: collectionTitle});
+        this.setState({modal_notes: notecards});
       })
       .catch(function (error) {
         console.log(error);
@@ -76,10 +84,11 @@ class NotecardList extends Component {
   render() {
     console.log("this will print twice");
     if (this.state.title) {
+      let note_cards = this.state.modal_notes;
       return (
           <div className="Collection">
           <h1 className="title">{this.state.title}</h1>
-            <ModalContainer />
+
             <table>
             <thead>
             <tr>
@@ -87,9 +96,17 @@ class NotecardList extends Component {
               <th>Translation</th>
             </tr>
             </thead>
+            {note_cards.map(note =>
             <tbody>
-              {this.state.notes}
+
+              <td>
+                <ModalContainer key={note._id} source_text={note.text} translation={note.translation} imgage={note.picture}/>
+              </td>
+              <td>
+                <span>{note.translation}</span>
+                </td>
               </tbody>
+              )}
             </table>
           </div>);
     } else {
