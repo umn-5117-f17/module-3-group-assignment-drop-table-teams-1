@@ -53,6 +53,8 @@ function withAuth(WrappedComponent) {
      */
     _handleAuthentication() {
       this.auth0.parseHash((err, authResult) => {
+        console.log(authResult);
+        console.log(err);
         if (err || !authResult || !authResult.accessToken || !authResult.idToken) {
           throw new Error('auth0 error', err, authResult);
         }
@@ -81,6 +83,8 @@ function withAuth(WrappedComponent) {
 
     _getProfile() {
       let profile = localStorage.getItem('profile');
+      console.log("auth prof check");
+      console.log(profile);
       return (!profile) ? null : JSON.parse(profile);
     }
 

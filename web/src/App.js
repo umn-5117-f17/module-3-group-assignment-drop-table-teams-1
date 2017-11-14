@@ -11,7 +11,7 @@ import FrontPage from './FrontPage';
 import Header from './Header';
 // eslint-disable-next-line
 import ProfilePage from './ProfilePage';
-import Dbpedia from './Dbpedia';
+
 import NewNote from './NewNote';
 import Collection from './Collection';
 
@@ -30,21 +30,28 @@ class App extends Component {
     });
   };
 
+
+  //withAuth(App)
+
   render() {
 
     // this.props has a bunch of stuff in it related to auth0 (from `withAuth` below)
-    // console.log('props', this.props);
+     console.log('props', this.props);
 
     return (
+
       <div className="App">
         <Header {...this.props} />
         <section className="section">
+
           <div className="content">
-            <Route exact path="/" component={props => <FrontPage inputText={this.state.inputText} onUserInput={this.handleUserInput} {... props} {...this.props} />}/>
-            <Route exact path="/NewNote" component={props => <NewNote {... props} {...this.props} />}/>
-            {/* send in props for router stuff; send in this.props for auth stuff */}
-            <Route path="/api-demo" render={props => <ApiDemoPage {...props} {...this.props} />} />
-            <Route path="/profile" render={props => <ProfilePage {...props} {...this.props} />} />
+          {withAuth(App)}
+
+          <Route exact path="/" component={props => <FrontPage inputText={this.state.inputText} onUserInput={this.handleUserInput} {... props} {...this.props} />}/>
+          <Route exact path="/NewNote" component={props => <NewNote {... props} {...this.props} />}/>
+          {/* send in props for router stuff; send in this.props for auth stuff */}
+          <Route path="/api-demo" render={props => <ApiDemoPage {...props} {...this.props} />} />
+          <Route path="/profile" render={props => <ProfilePage {...props} {...this.props} />} />
 
             <Route path="/Collection/:collectionId" component={Collection}/>
           </div>
