@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 
 // import frustratedMonkey from './frustrated-monkey.gif';
-import './frontpage.css';
+
 
 
 class Frontpage extends Component {
@@ -22,7 +22,7 @@ class Frontpage extends Component {
         const collectItems = collects.map((collect) =>
 
         <div class="column is-one-third" id={collect.name}>
-        <a href={"/Collection/" + collect.name} className="box">
+        <a href={"/Collection/" + collect.name} $box-color = "grey" className="box" >
           <p>{collect.name}</p>
         </a>
         </div>
@@ -86,30 +86,32 @@ class Frontpage extends Component {
     if (this.state.collections) {
       return (
           <div className="CollectionHomePage">
-          <h1 className="title">Public Collections Available</h1>
-          <div className="addCollection box">
+          <h1 className="title  has-text-centered">Public Collections Available</h1>
+          <div className="addCollection box field">
             <form>
-              <label>
+              <label class = "label"> Add new Collection </label>
                 <input
-                  className="newCollectInput"
+                  className="input"
                   placeholder="New Collection"
                   name="collectionName"
                   type="text"
                   onChange={this.handleInputChange}/>
+              <br/><br/>
+              <label class = "checkbox">
+              <input
+                className="checkBox"
+                name="isPrivate"
+                type="checkbox"
+                checked={this.state.isPrivate}
+                onChange={this.handleInputChange} />
+                  Is private
               </label>
-              <label>
-                Is private:
-                <input
-                  className="checkBox"
-                  name="isPrivate"
-                  type="checkbox"
-                  checked={this.state.isPrivate}
-                  onChange={this.handleInputChange} />
-              </label>
-              <button className="submit button is-small is-info newColBut" onClick={this.handleClick}>Add</button>
+              <br/><br/>
+              <button className="button is-link" onClick={this.handleClick}>Add Collection</button>
               <br/>
             </form>
           </div>
+          <br/>
           <div class="columns is-multiline">
             {this.state.collections}
           </div>
