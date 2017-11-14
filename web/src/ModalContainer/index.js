@@ -16,16 +16,16 @@ class ModalContainer extends Component {
   }
 
   componentDidMount() {
-    console.log("did mount sanity check");
-    console.log(this.props);
+    // console.log("did mount sanity check");
+    // console.log(this.props);
     let tmp_note = this.props.note_content;
     const src_txt = this.props.source_text;
     const trans = this.props.translation;
     const img_src = this.props.imgage;
 
-    console.log(tmp_note);
-    console.log("did mount sanity check");
-    console.log(this.props);
+    // console.log(tmp_note);
+    // console.log("did mount sanity check");
+    // console.log(this.props);
     this.setState({source_text: src_txt});
     this.setState({translation: trans});
     this.setState({image_url: img_src});
