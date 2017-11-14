@@ -46,17 +46,19 @@ class Collection extends Component {
     if (this.props.messageFromServer) {
       return (
           <div className="Collection">
-          <h1 className="title">{this.props.messageFromServer.title}</h1>
-            <table>
+            <h1 className="title">{this.props.messageFromServer.title}</h1>
+            <div className="newNote">
+              <a href="/notecard"><p className = "button is-link is-hovered">Create a New Note</p></a>
+            </div>
+            <br/>
+            <table class = "table is-bordered is-striped is-narrow is-fullwidth">
             <tr>
               <th>Original Text</th>
               <th>Translation</th>
             </tr>
               {this.props.messageFromServer.notes}
             </table>
-            <div className="newNote">
-              <a href="/notecard"><p className="button is-small is-info">Create a New Note</p></a>
-            </div>
+
           </div>);
     } else {
       return null;
