@@ -107,7 +107,7 @@ class Dbpedia extends Component {
                   Id: this.props.match.params.collectionId,
                   notes: this.state.annotations
                 })
-              })
+            })
           )
           .catch((error) => {
             console.error(error);
@@ -127,14 +127,23 @@ class Dbpedia extends Component {
   render() {
     return (
       <div className="FrontPage">
-        <form onSubmit={this.dbpedia}>
-          <textarea value={this.state.text} name="textInput"></textarea>
-          <input type="submit" value="Dbpedia"/>
-        </form>
+        <div className="field">
+          <label className="label">Enter Text</label>
+        </div>
+        <div className="field">
+          <form onSubmit={this.dbpedia}>
+            <div className="field">
+              <textarea className="textarea" value={this.state.text} name="textInput"></textarea>
+            </div>
+            <div className="field">
+              <input className="button" type="submit" value="Dbpedia"/>
+            </div>
+          </form>
+        </div>
         <NoteCardList {...this.props} notes={this.state.annotations}/>
       </div>
     );
   }
-  }
+}
 
 export default Dbpedia;
