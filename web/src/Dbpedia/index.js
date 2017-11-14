@@ -96,6 +96,19 @@ class Dbpedia extends Component {
             this.setState({annotations: annotations});
             this.translate();
           })
+          .then(
+            fetch('/api/db/newNote', {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  Id: this.props.match.params.collectionId,
+                  notes: this.state.annotations
+                })
+              })
+          )
           .catch((error) => {
             console.error(error);
           });

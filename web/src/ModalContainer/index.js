@@ -48,7 +48,7 @@ class ModalContainer extends Component {
           <a onClick={this.handleOpenModal}> {this.state.source_text}</a>
           <Modal isOpen={this.state.showModal} onClose={this.handleCloseModal}>
             <h1>{this.state.translation}</h1>
-             <img src={this.state.image_url} alt="oops, we couldn't find this image on wikipedia!"></img>
+             <img src={this.state.image_url} alt="oops, we couldn't find it on wikipedia!"/>
              <br></br>
              <span>{this.state.source_text}</span>
             <p><button onClick={this.handleCloseModal}>Close</button></p>

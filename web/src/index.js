@@ -1,7 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom'
-import { withAuth } from './Auth';
 import 'bulma/css/bulma.css';
 import 'font-awesome/css/font-awesome.css';
 
