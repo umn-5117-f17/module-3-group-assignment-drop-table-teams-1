@@ -2,6 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { BrowserRouter } from 'react-router-dom'
 
+//import "../sass/utilities/initial-variables"
+//import "../sass/utilities/functions"
+
+
 import 'bulma/css/bulma.css';
 import 'font-awesome/css/font-awesome.css';
 
