@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Dbpedia from '../Dbpedia';
-import Buttons from '../Button';
-import LanguageSelect from '../LanguageSelect'
+import LanguageSelect from '../LanguageSelect';
 
 class NewNote extends Component {
   constructor(props) {
@@ -10,22 +9,26 @@ class NewNote extends Component {
       words: "",
       imgURL: "",
       source_langs:"en",
-      target_lang:"af"
+      target_lang:"af",
+      notes: []
     };
     this.setTargetLang = this.setTargetLang.bind(this);
+    this.setNotes = this.setNotes.bind(this);
   }
 
   setTargetLang(language) {
     this.setState({target_lang:language});
-    // console.log(JSON.stringify(this.state));
+  }
+
+  setNotes(notes){
+    this.setState({notes: notes});
   }
 
   render() {
     return (
       <div>
         <LanguageSelect setTargetLang={this.setTargetLang.bind(this)}  {...this.props} />
-        <Dbpedia target_lang={this.state.target_lang}/>
-        <Buttons />
+        <Dbpedia {...this.props} target_lang={this.state.target_lang} setNotes={this.setNotes}/>
       </div>
     );
   }

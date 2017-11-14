@@ -84,11 +84,11 @@ router.post('/deleteNote', function(req, res) {
 
 router.get('/myCollections', function(req, res) {
   console.log("in the server collections");
-
-  req.db.collection('Collections').find({user: req.user.nickname}).toArray(function(err, results) {
+  console.log(req.user);
+  // req.db.collection('Collections').find({user: req.user.nickname}).toArray(function(err, results) {
     // console.log(results);
-    res.send({collections: results});
-  });
+    // res.send({collections: results});
+  // });
 });
 
 // checkJwt middleware will enforce valid authorization token

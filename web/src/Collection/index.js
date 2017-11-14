@@ -5,11 +5,12 @@ import trash from './rubbish-bin.png';
 
 
 
-
 class NotecardList extends Component {
-  constructor() {
-    super();
-    this.state = { title: '', notes: '' }
+  constructor(props) {
+    super(props);
+    this.state = {
+      title: ''
+    }
     this.handleDelete = this.handleDelete.bind(this);
   }
 
@@ -74,29 +75,33 @@ class NotecardList extends Component {
       });
   }
 
-
   render() {
-    console.log("this will print twice");
-    if (this.state.title) {
       return (
           <div className="Collection">
-          <h1 className="title">{this.state.title}</h1>
+            <h1 className="title">{this.state.title}</h1>
             <table>
-            <thead>
-            <tr>
-              <th>Original Text</th>
-              <th>Translation</th>
-            </tr>
-            </thead>
+              <thead>
+                <tr>
+                  <th>Original Text</th>
+                  <th>Translation</th>
+                  <th>Image</th>
+                </tr>
+              </thead>
             <tbody>
-
-              {this.state.notes}
-              </tbody>
+            {Object.keys(this.props.notes).map((key) => {
+                    return (
+                      <tr key={key}>
+                        <td>{key}</td>
+                        <td>{this.props.notes[key][1]}</td>
+                        <td><img src={this.props.notes[key][0]} alt="" height="200"/></td>
+                      </tr>
+            )})}
+            </tbody>
             </table>
           </div>);
-    } else {
-      return null;
-    }
+    // } else {
+      // return null;
+    // }
 
   }
 }

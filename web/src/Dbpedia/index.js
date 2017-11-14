@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import NoteCardList from '../Collection';
 
 class Dbpedia extends Component {
   constructor(props) {
@@ -12,11 +13,16 @@ class Dbpedia extends Component {
 
     this.dbpedia = this.dbpedia.bind(this);
     this.translate = this.translate.bind(this);
+    this.doSetNotes = this.doSetNotes.bind(this);
   }
 
   componentDidMount() {
     let t_lang = this.props.target_lang;
     this.setState({target_lang: t_lang});
+  }
+
+  doSetNotes(notes){
+    this.props.setNotes(notes);
   }
 
 
@@ -112,20 +118,7 @@ class Dbpedia extends Component {
           <textarea value={this.state.text} name="textInput"></textarea>
           <input type="submit" value="Dbpedia"/>
         </form>
-        <table>
-          <tbody>
-            {Object.keys(this.state.annotations).map((key) => {
-                    return (
-                      <tr key={key}>
-                        <td>{key}</td>
-                        <td><img src={this.state.annotations[key][0]} alt="" height="200"/></td>
-                      </tr>
-            )})}
-          </tbody>
-        </table>
-        <pre>{JSON.stringify(Object.keys(this.state.annotations))}</pre>
-        <pre>{JSON.stringify(this.state.annotations)}</pre>
-        <pre>{JSON.stringify(this.state)}</pre>
+        <NoteCardList {...this.props} notes={this.state.annotations}/>
       </div>
     );
   }
