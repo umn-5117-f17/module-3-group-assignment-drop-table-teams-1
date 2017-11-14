@@ -46,12 +46,13 @@ class App extends Component {
           <div className="content">
 <<<<<<< HEAD
             {withAuth(App)}
-            <Route exact path="/" component={props => <NewNote inputText={this.state.inputText} onUserInput={this.handleUserInput} {... props} {...this.props} />}/>
-            {/*<Route exact path="/" component={props => <FrontPage inputText={this.state.inputText} onUserInput={this.handleUserInput} {... props} {...this.props} />}/>*/}
+            {/*<Route exact path="/" component={props => <NewNote inputText={this.state.inputText} onUserInput={this.handleUserInput} {... props} {...this.props} />}/>*/}
+            <Route exact path="/" component={props => <FrontPage inputText={this.state.inputText} onUserInput={this.handleUserInput} {... props} {...this.props} />}/>
             <Route exact path="/NewNote" component={props => <NewNote {... props} {...this.props} />}/>
             {/* send in props for router stuff; send in this.props for auth stuff */}
             <Route path="/api-demo" render={props => <ApiDemoPage {...props} {...this.props} />} />
             <Route path="/profile" render={props => <ProfilePage {...props} {...this.props} />} />
+<<<<<<< Updated upstream
 =======
           {withAuth(App)}
 
@@ -63,6 +64,9 @@ class App extends Component {
 
 >>>>>>> origin/fisch885_modal
             <Route path="/Collection/:collectionId" component={Collection}/>
+=======
+            <Route path="/Collection/:collectionId" component={props => <NewNote {...props} {...this.props}/>}/>
+>>>>>>> Stashed changes
           </div>
         </section>
       </div>

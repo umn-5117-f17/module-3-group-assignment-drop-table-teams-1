@@ -91,8 +91,12 @@ class NotecardList extends Component {
   }
 
   render() {
+<<<<<<< Updated upstream
 <<<<<<< HEAD
       let note_cards = this.state.modal_notes;
+=======
+    if(this.props.notes) {
+>>>>>>> Stashed changes
       return (
           <div className="Collection">
             <h1 className="title">{this.state.title}</h1>
@@ -154,10 +158,21 @@ class NotecardList extends Component {
 >>>>>>> origin/fisch885_modal
             </table>
           </div>);
-    // } else {
-      // return null;
-    // }
-
+    } else {
+      return (
+          <div className="Collection">
+            <h1 className="title">{this.state.title}</h1>
+            <table>
+              <thead>
+                <tr>
+                  <th>Original Text</th>
+                  <th>Translation</th>
+                  <th>Image</th>
+                </tr>
+              </thead>
+            </table>
+          </div>);
+    }
   }
 }
 
