@@ -25,9 +25,17 @@ class LoginLogout extends Component {
 
     const loginLogoutButton = this.isLoggedIn()
       ? (
+        <div>
+        <a className="navbar-item" href="/myCollections">
+          My Collections
+        </a>
+        <hr className="navbar-divider" />
+        <div className="navbar-item">
         <button className="button" onClick={this.logout}>
           Log Out
         </button>
+        </div>
+        </div>
       ) : (
         <button className="button" onClick={this.login}>
           Log In

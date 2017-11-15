@@ -14,7 +14,7 @@ class Frontpage extends Component {
   }
 
   componentDidMount() {
-    console.log("profile is " + JSON.stringify(this.props.profile.nickname));
+    //console.log("profile is " + JSON.stringify(this.props.profile.nickname));
     fetch('/api/db/collections')
       .then(res => res.json())
       .then(json => {
