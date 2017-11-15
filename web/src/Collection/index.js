@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 //import { Link } from 'react-router-dom';
 import './Collection.css';
 import ModalContainer from '../ModalContainer';
-import trash from './rubbish-bin.png';
 
 class NotecardList extends Component {
   constructor(props) {
