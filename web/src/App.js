@@ -2,10 +2,8 @@ import React, { Component } from 'react';
 import { Route } from 'react-router-dom'
 
 import { withAuth } from './Auth';
-import ApiDemoPage from './ApiDemoPage';
 import FrontPage from './FrontPage';
 import Header from './Header';
-import ProfilePage from './ProfilePage';
 import NewNote from './NewNote';
 import MyCollections from './MyCollections'
 
@@ -28,7 +26,7 @@ class App extends Component {
   render() {
 
     // this.props has a bunch of stuff in it related to auth0 (from `withAuth` below)
-     console.log('props', this.props);
+     // console.log('props', this.props);
 
     return (
 
@@ -41,9 +39,7 @@ class App extends Component {
           <Route exact path="/myCollections" component={props => <MyCollections inputText={this.state.inputText} onUserInput={this.handleUserInput} {... props} {...this.props} />}/>
           <Route exact path="/NewNote" component={props => <NewNote {... props} {...this.props} />}/>
           {/* send in props for router stuff; send in this.props for auth stuff */}
-          <Route path="/api-demo" render={props => <ApiDemoPage {...props} {...this.props} />} />
-          <Route path="/profile" render={props => <ProfilePage {...props} {...this.props} />} />
-            <Route path="/Collection/:collectionId" component={props => <NewNote {...props} {...this.props}/>}/>
+          <Route path="/Collection/:collectionId" component={props => <NewNote {...props} {...this.props}/>}/>
           </div>
         </section>
       </div>

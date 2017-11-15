@@ -16,7 +16,7 @@ class MyCollections extends Component {
     fetch('/api/db/myCollections/'+ this.props.profile.nickname)
       .then(res => res.json())
       .then(json => {
-        console.log(json);
+        // console.log(json);
         var collects = json.collections;
         const collectItems = collects.map((collect) =>
 

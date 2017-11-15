@@ -16,7 +16,6 @@ class ModalContainer extends Component {
   }
 
   componentDidMount() {
-    // let tmp_note = this.props.note_content;
     const src_txt = this.props.source_text;
     const trans = this.props.translation;
     const img_src = this.props.imgage;

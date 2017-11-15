@@ -13,7 +13,8 @@ class Dbpedia extends Component {
       translated_words:[],
       title: '',
       notes: '',
-      modal_notes: []
+      modal_notes: [],
+      text: ''
     };
 
     this.dbpedia = this.dbpedia.bind(this);
@@ -24,17 +25,10 @@ class Dbpedia extends Component {
     this.fetchNew = this.fetchNew.bind(this);
   }
 
-  // componentDidMount() {
-  //   let t_lang = this.props.target_lang;
-  //   this.setState({target_lang: t_lang});
-  // }
-
   handleDelete(event) {
     //call server side to add collection to database
     const target = event.target;
     const noteId = target.id;
-
-    console.log("in delete, Id is " + noteId);
 
     fetch('/api/db/deleteNote', {
         method: 'POST',
@@ -49,16 +43,8 @@ class Dbpedia extends Component {
         fetch('/api/db/notecards/' + this.props.match.params.collectionId)
           .then(res => res.json())
           .then(json => {
-            console.log(json);
             var notecards = json.noteCards;
             var collectionTitle = this.props.match.params.collectionId;
-            // const noteItems = notecards.map((note) => {
-            //   <tr>
-            //     <td>{note.translation}</td>
-            //     <td id={note._id}><a id={note._id} onClick={this.handleDelete}><img id={note._id} src={trash} alt="delete button"/></a></td>
-            //   </tr>
-            // });
-            // this.setState({notes: noteItems});  /*this will cause an invoke of the render() function again */
             this.setState({title: collectionTitle});
             this.setState({modal_notes: notecards});
           })
@@ -74,20 +60,8 @@ class Dbpedia extends Component {
     fetch('/api/db/notecards/' + this.props.match.params.collectionId)
       .then(res => res.json())
       .then(json => {
-        // console.log(json);
         var notecards = json.noteCards;
-        // console.log("note caard check");
-        // console.log(notecards);
-
         var collectionTitle = this.props.match.params.collectionId;
-        // const noteItems = notecards.map((note) =>
-          // <tr>
-          //   <td>{note.text}</td>
-          //   <td>{note.translation}</td>
-          //   <td id={note._id}><a id={note._id} onClick={this.handleDelete}><img id={note._id} src={trash} alt="delete button"/></a></td>
-          // </tr>
-        // );
-        // this.setState({notes: noteItems});  /*this will cause an invoke of the render() function again */
         this.setState({title: collectionTitle});
         this.setState({modal_notes: notecards});
       })
@@ -118,6 +92,19 @@ class Dbpedia extends Component {
                 Object.assign(newAnnotations, this.state.annotations);
                 newAnnotations[word].push(json.data.translations[0].translatedText);
                 this.setState({test: newAnnotations});
+                fetch('/api/db/newNote', {
+                  method: 'POST',
+                  headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                    Id: this.props.match.params.collectionId,
+                    notes: newAnnotations
+                  })})
+                  .then(
+                    this.fetchNew()
+                  );
               }
             })
             .catch(function (error) {
@@ -140,8 +127,8 @@ class Dbpedia extends Component {
               })
             }).then(
               this.fetchNew()
-            )
-  }
+            );
+}
 
   fetchNew() {
     fetch('/api/db/notecards/' + this.props.match.params.collectionId)
@@ -176,7 +163,7 @@ class Dbpedia extends Component {
         }
       });
       this.setState({annotations: annotations});
-      // console.log("annotations is " + JSON.stringify(this.state.annotations));
+      console.log(annotations)
       Object.keys(annotations).map((key) => {
         fetch(annotations[key],{
           method: "GET",
@@ -202,7 +189,6 @@ class Dbpedia extends Component {
             annotations[key] = [content];
             this.setState({annotations: annotations});
             this.translate();
-            // this.handlePopulate();
           })
           .catch((error) => {
             console.error(error);
@@ -213,7 +199,6 @@ class Dbpedia extends Component {
         });
         return null;
       });
-
     })
     .catch((error) => {
       console.error(error);
@@ -226,7 +211,6 @@ class Dbpedia extends Component {
   render() {
     let note_cards = this.state.modal_notes;
     return (
-
       <div className="FrontPage">
         <div className="field">
           <label className="label">Enter Text</label>
@@ -234,41 +218,32 @@ class Dbpedia extends Component {
         <div className="field">
           <form onSubmit={this.dbpedia}>
             <div className="field">
-              <textarea className="textarea" value={this.state.text} name="textInput"></textarea>
+              <textarea className="textarea" name="textInput"></textarea>
             </div>
             <div className="field">
-              <input className="button" type="submit" value="Dbpedia"/>
-              <button className="button" onClick={this.handlePopulate}>Populate</button>
+              <input className="button" type="submit" value="Transmutinate"/>
             </div>
           </form>
           </div>
         <h1 className="title">{this.state.title}</h1>
         <table>
-          <thead>
-            <tr>
-              <th>Original Text</th>
-              <th>Translation</th>
-            </tr>
-          </thead>
           <tbody>
-          {/*Object.keys(this.props.notes).map((key) => {
-                  return (
-                    <tr key={key}>
-                      <ModalContainer key={key} source_text={key} translation={this.props.notes[key][1]} imgage={this.props.notes[key][0]}/>
-                      <td>{this.props.notes[key][1]}</td>
-                    </tr>
-          )})*/}
-        {note_cards.map(note =>
-            <tr>
-              <td>
-                <ModalContainer key={note._id} source_text={note.text} translation={note.translation} imgage={note.picture}/>
-              </td>
-              <td>
-                {note.translation}
-              </td>
-              <td id={note._id}><a id={note._id} onClick={this.handleDelete}><img id={note._id} alt="delete button"/></a></td>
-            </tr>
-        )}
+              <tr className="columns">
+                <th className="column is-one-third">Original Text</th>
+                <th className="column is-one-third">Translation</th>
+                <th className="column is-one-third">Delete</th>
+              </tr>
+            {note_cards.map(note =>
+              <tr className="columns" key={note._id}>
+                <td className="column is-one-third">
+                  <ModalContainer key={note._id} source_text={note.text} translation={note.translation} imgage={note.picture}/>
+                </td>
+                <td className="column is-one-third">
+                  {note.translation}
+                </td>
+                <td className="column is-one-third"><button className="button is-danger" id={note._id} onClick={this.handleDelete}>Delete</button></td>
+              </tr>
+            )}
           </tbody>
         </table>
       </div>

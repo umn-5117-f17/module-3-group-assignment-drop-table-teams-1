@@ -25,18 +25,17 @@ class Header extends Component {
               Menu
             </a>
             <div className="navbar-dropdown">
-              <a className="navbar-item">
-                New Note
+              <a className="navbar-item" href="/myCollections">
+                My Collections
               </a>
-              <a className="navbar-item">
+              <a className="navbar-item" href="/">
                 Browse Collections
               </a>
-              <a className="navbar-item">
-                Bookmarks
-              </a>
-                <LoginLogout {...this.props} />
             </div>
           </div>
+        </div>
+        <div className="navbar-end">
+          <LoginLogout {...this.props} />
         </div>
       </nav>
     )

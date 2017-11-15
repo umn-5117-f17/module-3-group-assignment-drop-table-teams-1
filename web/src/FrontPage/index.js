@@ -37,9 +37,9 @@ class Frontpage extends Component {
 
   handleClick(event) {
     //call server side to add collection to database
-    console.log('Your collection is: ' + this.state.collectionName);
-    console.log("on click name is " + JSON.stringify(this.props.profile.nickname));
-
+    // console.log('Your collection is: ' + this.state.collectionName);
+    // console.log("on click name is " + JSON.stringify(this.props.profile.nickname));
+    document.getElementById("newCollectionForm").reset();
     fetch('/api/db/newCollection', {
         method: 'POST',
         headers: {
@@ -86,14 +86,14 @@ class Frontpage extends Component {
 
   render() {
     // console.log("this will print twice");
-    console.log(this.props.profile);
+    // console.log(this.props.profile);
     if (this.state.collections) {
       return (
           <div className="CollectionHomePage">
           <h1 className="title  has-text-centered">Public Collections Available</h1>
           <div className="addCollection box field">
-            <form>
-              <label class = "label"> Add new Collection </label>
+            <form id="newCollectionForm">
+              <label className= "label"> Add new Collection </label>
                 <input
                   className="input"
                   placeholder="New Collection"
@@ -101,7 +101,7 @@ class Frontpage extends Component {
                   type="text"
                   onChange={this.handleInputChange}/>
               <br/><br/>
-              <label class = "checkbox">
+              <label className= "checkbox">
               <input
                 className="checkBox"
                 name="isPrivate"

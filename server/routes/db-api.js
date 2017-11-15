@@ -23,7 +23,6 @@ router.get('/unprotected', function(req, res, next) {
 router.get('/notecards/:collect', function(req, res) {
   console.log("in the server notecard");
   var collectionId = req.params.collect;
-
   req.db.collection('Notecards').find({'collection': collectionId}).toArray(function(err, results) {
     // console.log(results);
     res.send({noteCards: results});
@@ -31,8 +30,8 @@ router.get('/notecards/:collect', function(req, res) {
 });
 
 router.post('/newCollection', function(req, res) {
-  console.log("in new collection server");
-    console.log(req.body.user);
+  // console.log("in new collection server");
+    // console.log(req.body.user);
   var newItem = {
     user: req.body.user,
     privacy: req.body.isPrivate,
@@ -48,12 +47,10 @@ router.post('/newCollection', function(req, res) {
 });
 
 router.post('/newNote', function(req,res) {
-  console.log("in new note server");
-  //console.log(req.body);
-var keys = Object.keys( req.body.notes );
-    console.log(req.body.notes[keys[0]])
-  console.log(req.body);
-  var keyWord = keys[0];
+  var keys = Object.keys( req.body.notes );
+  req.db.collection('Notecards').find({collection: req.body.id, text: keys[0]}, (err, cursor) => {
+    if (cursor.toArray.length === 1){
+      var keyWord = keys[0];
       var i =0;
       while(i<keys.length) {
         var newItem = {
@@ -65,12 +62,13 @@ var keys = Object.keys( req.body.notes );
           originalLanguage: "undefined",
           endingLanguage: "undefined"
         }
-        console.log(newItem);
+        // console.log(newItem);
         i++;
         req.db.collection('Notecards').insertOne(newItem, function(err, results) {
-
         })
       }
+    }
+  });
   // var newItem = {
   //   star: false,
   //   collection: req.body.collection,

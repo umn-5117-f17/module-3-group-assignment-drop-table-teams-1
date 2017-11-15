@@ -34,7 +34,7 @@ class NotecardList extends Component {
         fetch('/api/db/notecards/' + this.props.match.params.collectionId)
           .then(res => res.json())
           .then(json => {
-            console.log(json);
+            // console.log(json);
             var notecards = json.noteCards;
             var collectionTitle = this.props.match.params.collectionId;
             // const noteItems = notecards.map((note) => {
@@ -95,10 +95,10 @@ class NotecardList extends Component {
             <tbody>
             {note_cards.map(note =>
               <tr>
-                <td class = "has-text-centered subtitle is-5">
+                <td className= "has-text-centered subtitle is-5">
                   <ModalContainer key={note._id} source_text={note.text} translation={note.translation} imgage={note.picture}/>
                 </td>
-                <td class = "has-text-centered subtitle is-5">{note.translation}</td>
+                <td className= "has-text-centered subtitle is-5">{note.translation}</td>
                 <td id={note._id}><a id={note._id} onClick={this.handleDelete}><img id={note._id} alt="delete button"/></a></td>
               </tr>
             )}
