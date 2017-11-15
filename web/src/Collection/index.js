@@ -83,32 +83,29 @@ class NotecardList extends Component {
       let note_cards = this.state.modal_notes;
       <h1>{this.props.notes}</h1>
       return (
-          <div className="Collection">
-            <h1 className="title">{this.state.title}</h1>
-            <table className="table is-bordered is-striped is-fullwidth">
-              <thead>
-                <tr>
-                  <th className="has-text-centered">Original Text</th>
-                  <th className="has-text-centered">Translation</th>
-                </tr>
-              </thead>
-              <tbody>
-              {note_cards.map(note =>
-                <tr>
-                  <td class = "has-text-centered subtitle is-5">
-                    <ModalContainer key={note._id} source_text={note.text} translation={note.translation} imgage={note.picture}/>
-                  </td>
-                  <td class = "has-text-centered subtitle is-5">{note.translation}</td>
-                  <td id={note._id}><a id={note._id} onClick={this.handleDelete}><img id={note._id} src={trash} alt="delete button"/></a></td>
-                </tr>
-              )}
-              </tbody>
-            </table>
-          </div>);
-    // } else {
-      // return null;
-    // }
-
+        <div className="Collection">
+          <h1 className="title">{this.state.title}</h1>
+          <table className="table is-bordered is-striped is-fullwidth">
+            <thead>
+              <tr>
+                <th className="has-text-centered">Original Text</th>
+                <th className="has-text-centered">Translation</th>
+              </tr>
+            </thead>
+            <tbody>
+            {note_cards.map(note =>
+              <tr>
+                <td class = "has-text-centered subtitle is-5">
+                  <ModalContainer key={note._id} source_text={note.text} translation={note.translation} imgage={note.picture}/>
+                </td>
+                <td class = "has-text-centered subtitle is-5">{note.translation}</td>
+                <td id={note._id}><a id={note._id} onClick={this.handleDelete}><img id={note._id} alt="delete button"/></a></td>
+              </tr>
+            )}
+            </tbody>
+          </table>
+        </div>
+      );
   }
 }
 

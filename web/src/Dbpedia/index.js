@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+// eslint-disable-next-line
 import NoteCardList from '../Collection';
 import ModalContainer from '../ModalContainer';
 
@@ -265,7 +266,7 @@ class Dbpedia extends Component {
               <td>
                 {note.translation}
               </td>
-              <td id={note._id}><a id={note._id} onClick={this.handleDelete}><img id={note._id} src={trash} alt="delete button"/></a></td>
+              <td id={note._id}><a id={note._id} onClick={this.handleDelete}><img id={note._id} alt="delete button"/></a></td>
             </tr>
         )}
           </tbody>
