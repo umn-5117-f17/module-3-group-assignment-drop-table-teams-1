@@ -265,6 +265,6 @@ class Dbpedia extends Component {
       </div>
     );
   }
-  }
+}
 
 export default Dbpedia;

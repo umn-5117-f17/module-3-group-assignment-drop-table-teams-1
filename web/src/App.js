@@ -13,7 +13,8 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      text: ''
+      text: '',
+      profile: ''
     };
     this.handleUserInput = this.handleUserInput.bind(this);
   }
@@ -23,9 +24,6 @@ class App extends Component {
       inputText: inputText
     });
   };
-
-
-  //withAuth(App)
 
   render() {
 
