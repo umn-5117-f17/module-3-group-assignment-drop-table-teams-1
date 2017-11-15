@@ -15,6 +15,7 @@
   "dependencies": {
     "auth0-js": "^8.10.1",
     "body-parser": "~1.17.1",
+    "build": "^0.1.4",
     "co": "^4.6.0",
     "cookie-parser": "~1.4.3",
     "debug": "~2.6.3",
