@@ -228,11 +228,20 @@ class Dbpedia extends Component {
     return (
 
       <div className="FrontPage">
-        <form onSubmit={this.dbpedia}>
-          <textarea value={this.state.text} name="textInput"></textarea>
-          <input type="submit" value="Dbpedia"/>
-          <button onClick={this.handlePopulate}>Populate</button>
-        </form>
+        <div className="field">
+          <label className="label">Enter Text</label>
+        </div>
+        <div className="field">
+          <form onSubmit={this.dbpedia}>
+            <div className="field">
+              <textarea className="textarea" value={this.state.text} name="textInput"></textarea>
+            </div>
+            <div className="field">
+              <input className="button" type="submit" value="Dbpedia"/>
+              <button className="button" onClick={this.handlePopulate}>Populate</button>
+            </div>
+          </form>
+          </div>
         <h1 className="title">{this.state.title}</h1>
         <table>
           <thead>
