@@ -85,7 +85,6 @@ class NotecardList extends Component {
       <h1>{this.props.notes}</h1>
       return (
           <div className="Collection">
-<<<<<<< HEAD
             <h1 className="title">{this.state.title}</h1>
             <table className="table is-bordered is-striped is-fullwidth">
               <thead>
@@ -104,26 +103,6 @@ class NotecardList extends Component {
                   <td id={note._id}><a id={note._id} onClick={this.handleDelete}><img id={note._id} src={trash} alt="delete button"/></a></td>
                 </tr>
               )}
-=======
-          <h1 className="title">{this.state.title}</h1>
-
-            <table class = "table is-bordered is-striped is-fullwidth ">
-            <thead >
-            <tr>
-              <th class = "has-text-centered">Original Text</th>
-              <th class = "has-text-centered">Translation</th>
-            </tr>
-            </thead>
-            {note_cards.map(note =>
-            <tbody>
-
-              <td class = "has-text-centered subtitle is-5">
-                <ModalContainer key={note._id} source_text={note.text} translation={note.translation} imgage={note.picture}/>
-              </td>
-              <td class = "has-text-centered subtitle is-5">
-                <span>{note.translation}</span>
-                </td>
->>>>>>> origin/aishwarya_new
               </tbody>
             </table>
           </div>);
