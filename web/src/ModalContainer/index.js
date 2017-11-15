@@ -44,6 +44,7 @@ class ModalContainer extends Component {
 
   render() {
     return (
+<<<<<<< HEAD
         <div>
           <a onClick={this.handleOpenModal}> {this.state.source_text}</a>
           <Modal isOpen={this.state.showModal} onClose={this.handleCloseModal}>
@@ -54,6 +55,19 @@ class ModalContainer extends Component {
             <p><button onClick={this.handleCloseModal}>Close</button></p>
           </Modal>
         </div>
+=======
+      <div>
+       <a onClick={this.handleOpenModal}> {this.state.source_text}</a>
+       <Modal isOpen={this.state.showModal} onClose={this.handleCloseModal}>
+         <span className = "title" >{this.state.source_text}</span>
+         <h1 className = "title" >{this.state.translation}</h1> <p><button className="button is-link" onClick={this.handleCloseModal}>Close</button></p>
+          <img src={this.state.image_url} alt="oops, we couldn't find this image on wikipedia!"></img>
+          <br></br>
+
+
+       </Modal>
+      </div>
+>>>>>>> origin/aishwarya_new
       )
   }
 }

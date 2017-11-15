@@ -85,33 +85,45 @@ class NotecardList extends Component {
       <h1>{this.props.notes}</h1>
       return (
           <div className="Collection">
+<<<<<<< HEAD
             <h1 className="title">{this.state.title}</h1>
-            <table>
+            <table className="table is-bordered is-striped is-fullwidth">
               <thead>
                 <tr>
-                  <th>Original Text</th>
-                  <th>Translation</th>
+                  <th className="has-text-centered">Original Text</th>
+                  <th className="has-text-centered">Translation</th>
                 </tr>
               </thead>
               <tbody>
-              {/*Object.keys(this.props.notes).map((key) => {
-                      return (
-                        <tr key={key}>
-                          <ModalContainer key={key} source_text={key} translation={this.props.notes[key][1]} imgage={this.props.notes[key][0]}/>
-                          <td>{this.props.notes[key][1]}</td>
-                        </tr>
-              )})*/}
-            {note_cards.map(note =>
+              {note_cards.map(note =>
                 <tr>
-                  <td>
+                  <td class = "has-text-centered subtitle is-5">
                     <ModalContainer key={note._id} source_text={note.text} translation={note.translation} imgage={note.picture}/>
                   </td>
-                  <td>
-                    {note.translation}
-                  </td>
+                  <td class = "has-text-centered subtitle is-5">{note.translation}</td>
                   <td id={note._id}><a id={note._id} onClick={this.handleDelete}><img id={note._id} src={trash} alt="delete button"/></a></td>
                 </tr>
-            )}
+              )}
+=======
+          <h1 className="title">{this.state.title}</h1>
+
+            <table class = "table is-bordered is-striped is-fullwidth ">
+            <thead >
+            <tr>
+              <th class = "has-text-centered">Original Text</th>
+              <th class = "has-text-centered">Translation</th>
+            </tr>
+            </thead>
+            {note_cards.map(note =>
+            <tbody>
+
+              <td class = "has-text-centered subtitle is-5">
+                <ModalContainer key={note._id} source_text={note.text} translation={note.translation} imgage={note.picture}/>
+              </td>
+              <td class = "has-text-centered subtitle is-5">
+                <span>{note.translation}</span>
+                </td>
+>>>>>>> origin/aishwarya_new
               </tbody>
             </table>
           </div>);
