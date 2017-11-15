@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 
 import LoginLogout from './LoginLogout';
+import './header.css';
 
 class Header extends Component {
   constructor(props) {
@@ -15,19 +16,16 @@ class Header extends Component {
 
   render() {
     return (
-      <nav className="navbar is-light" aria-label="dropdown navigation">
+      <nav className="navbar is-dark" aria-label="dropdown navigation">
         <div className="navbar-start">
           <a className="navbar-item title" href="/">Transmutinator</a>
         </div>
-        <div className="navbar-menu">
+        <div className="navbar-menu is-light">
           <div className={this.state.active}>
-            <a className="navbar-link" onClick={this.toggleActive}>
+            <a className="navbar-link title-bar" onClick={this.toggleActive}>
               Menu
             </a>
             <div className="navbar-dropdown">
-              <a className="navbar-item" href="/myCollections">
-                My Collections
-              </a>
               <a className="navbar-item" href="/">
                 Browse Collections
               </a>

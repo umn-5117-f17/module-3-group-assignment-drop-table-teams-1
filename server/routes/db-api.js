@@ -23,6 +23,7 @@ router.get('/unprotected', function(req, res, next) {
 router.get('/notecards/:collect', function(req, res) {
   console.log("in the server notecard");
   var collectionId = req.params.collect;
+
   req.db.collection('Notecards').find({'collection': collectionId}).toArray(function(err, results) {
     // console.log(results);
     res.send({noteCards: results});
@@ -30,8 +31,8 @@ router.get('/notecards/:collect', function(req, res) {
 });
 
 router.post('/newCollection', function(req, res) {
-  // console.log("in new collection server");
-    // console.log(req.body.user);
+  console.log("in new collection server");
+    console.log(req.body.user);
   var newItem = {
     user: req.body.user,
     privacy: req.body.isPrivate,
@@ -47,13 +48,16 @@ router.post('/newCollection', function(req, res) {
 });
 
 router.post('/newNote', function(req,res) {
-  var keys = Object.keys( req.body.notes );
-  req.db.collection('Notecards').find({collection: req.body.id, text: keys[0]}, (err, cursor) => {
-    if (cursor.toArray.length === 1){
-      var keyWord = keys[0];
+  console.log("in new note server");
+  //console.log(req.body);
+var keys = Object.keys( req.body.notes );
+    console.log(req.body.notes[keys[0]])
+  console.log(req.body);
+  var keyWord = keys[0];
       var i =0;
       while(i<keys.length) {
         var newItem = {
+          user: req.body.user,
           star: false,
           collection: req.body.Id,
           text: keys[i],
@@ -62,13 +66,12 @@ router.post('/newNote', function(req,res) {
           originalLanguage: "undefined",
           endingLanguage: "undefined"
         }
-        // console.log(newItem);
+        console.log(newItem);
         i++;
         req.db.collection('Notecards').insertOne(newItem, function(err, results) {
+
         })
       }
-    }
-  });
   // var newItem = {
   //   star: false,
   //   collection: req.body.collection,
@@ -95,8 +98,10 @@ router.get('/collections', function(req, res) {
 
 router.post('/deleteNote', function(req, res) {
   var note = req.body.Id;
-
-  req.db.collection('Notecards').deleteOne({"_id": ObjectId(note)},function(err, results){
+  var userId = req.body.user;
+  console.log("note " + note)
+  console.log("user " + userId)
+  req.db.collection('Notecards').deleteOne({"_id": ObjectId(note), "user": userId},function(err, results){
       //send success status to client side
       res.status(200).send('success');
     });

@@ -11,6 +11,11 @@ class Frontpage extends Component {
 
     this.handleClick = this.handleClick.bind(this);
     this.handleInputChange = this.handleInputChange.bind(this);
+    this.isAuthenticated = this.props.isAuthenticated.bind(this);
+  }
+
+  isLoggedIn() {
+    return this.isAuthenticated() && !!this.props.profile;
   }
 
   componentDidMount() {
@@ -87,34 +92,38 @@ class Frontpage extends Component {
   render() {
     // console.log("this will print twice");
     // console.log(this.props.profile);
+    const userDisplay = this.isLoggedIn()
+      ? (
+        <div className="addCollection box field">
+          <form id="newCollectionForm">
+            <label className= "label"> Add new Collection </label>
+              <input
+                className="input"
+                placeholder="New Collection"
+                name="collectionName"
+                type="text"
+                onChange={this.handleInputChange}/>
+            <br/><br/>
+            <label className= "checkbox">
+            <input
+              className="checkBox"
+              name="isPrivate"
+              type="checkbox"
+              checked={this.state.isPrivate}
+              onChange={this.handleInputChange} />
+                Is private
+            </label>
+            <br/><br/>
+            <button className="button is-link" onClick={this.handleClick}>Add Collection</button>
+            <br/>
+          </form>
+        </div>
+      ) : null;
     if (this.state.collections) {
       return (
           <div className="CollectionHomePage">
           <h1 className="title  has-text-centered">Public Collections Available</h1>
-          <div className="addCollection box field">
-            <form id="newCollectionForm">
-              <label className= "label"> Add new Collection </label>
-                <input
-                  className="input"
-                  placeholder="New Collection"
-                  name="collectionName"
-                  type="text"
-                  onChange={this.handleInputChange}/>
-              <br/><br/>
-              <label className= "checkbox">
-              <input
-                className="checkBox"
-                name="isPrivate"
-                type="checkbox"
-                checked={this.state.isPrivate}
-                onChange={this.handleInputChange} />
-                  Is private
-              </label>
-              <br/><br/>
-              <button className="button is-link" onClick={this.handleClick}>Add Collection</button>
-              <br/>
-            </form>
-          </div>
+          {userDisplay}
           <div className="columns is-multiline">
             {this.state.collections}
           </div>

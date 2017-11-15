@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-// eslint-disable-next-line
 import NoteCardList from '../Collection';
 import ModalContainer from '../ModalContainer';
+import './dbpedia.css';
 
 class Dbpedia extends Component {
   constructor(props) {
@@ -13,8 +13,7 @@ class Dbpedia extends Component {
       translated_words:[],
       title: '',
       notes: '',
-      modal_notes: [],
-      text: ''
+      modal_notes: []
     };
 
     this.dbpedia = this.dbpedia.bind(this);
@@ -23,12 +22,24 @@ class Dbpedia extends Component {
     this.handlePopulate = this.handlePopulate.bind(this);
     this.handleDelete = this.handleDelete.bind(this);
     this.fetchNew = this.fetchNew.bind(this);
+    this.isAuthenticated = this.props.isAuthenticated.bind(this);
   }
+
+  // componentDidMount() {
+  //   let t_lang = this.props.target_lang;
+  //   this.setState({target_lang: t_lang});
+  // }
 
   handleDelete(event) {
     //call server side to add collection to database
     const target = event.target;
     const noteId = target.id;
+
+    if(!this.isLoggedIn()) {
+      return;
+    }
+
+    console.log("in delete, Id is " + noteId);
 
     fetch('/api/db/deleteNote', {
         method: 'POST',
@@ -38,13 +49,22 @@ class Dbpedia extends Component {
         },
         body: JSON.stringify({
           Id: noteId,
+          user: this.props.profile.nickname
         })
       }).then(
         fetch('/api/db/notecards/' + this.props.match.params.collectionId)
           .then(res => res.json())
           .then(json => {
+            console.log(json);
             var notecards = json.noteCards;
             var collectionTitle = this.props.match.params.collectionId;
+            // const noteItems = notecards.map((note) => {
+            //   <tr>
+            //     <td>{note.translation}</td>
+            //     <td id={note._id}><a id={note._id} onClick={this.handleDelete}><img id={note._id} src={trash} alt="delete button"/></a></td>
+            //   </tr>
+            // });
+            // this.setState({notes: noteItems});  /*this will cause an invoke of the render() function again */
             this.setState({title: collectionTitle});
             this.setState({modal_notes: notecards});
           })
@@ -60,8 +80,20 @@ class Dbpedia extends Component {
     fetch('/api/db/notecards/' + this.props.match.params.collectionId)
       .then(res => res.json())
       .then(json => {
+        // console.log(json);
         var notecards = json.noteCards;
+        // console.log("note caard check");
+        // console.log(notecards);
+
         var collectionTitle = this.props.match.params.collectionId;
+        // const noteItems = notecards.map((note) =>
+          // <tr>
+          //   <td>{note.text}</td>
+          //   <td>{note.translation}</td>
+          //   <td id={note._id}><a id={note._id} onClick={this.handleDelete}><img id={note._id} src={trash} alt="delete button"/></a></td>
+          // </tr>
+        // );
+        // this.setState({notes: noteItems});  /*this will cause an invoke of the render() function again */
         this.setState({title: collectionTitle});
         this.setState({modal_notes: notecards});
       })
@@ -92,19 +124,6 @@ class Dbpedia extends Component {
                 Object.assign(newAnnotations, this.state.annotations);
                 newAnnotations[word].push(json.data.translations[0].translatedText);
                 this.setState({test: newAnnotations});
-                fetch('/api/db/newNote', {
-                  method: 'POST',
-                  headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                    Id: this.props.match.params.collectionId,
-                    notes: newAnnotations
-                  })})
-                  .then(
-                    this.fetchNew()
-                  );
               }
             })
             .catch(function (error) {
@@ -122,13 +141,14 @@ class Dbpedia extends Component {
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
+                user: this.props.profile.nickname,
                 Id: this.props.match.params.collectionId,
                 notes: this.state.annotations
               })
             }).then(
               this.fetchNew()
-            );
-}
+            )
+  }
 
   fetchNew() {
     fetch('/api/db/notecards/' + this.props.match.params.collectionId)
@@ -163,7 +183,7 @@ class Dbpedia extends Component {
         }
       });
       this.setState({annotations: annotations});
-      console.log(annotations)
+      // console.log("annotations is " + JSON.stringify(this.state.annotations));
       Object.keys(annotations).map((key) => {
         fetch(annotations[key],{
           method: "GET",
@@ -189,6 +209,7 @@ class Dbpedia extends Component {
             annotations[key] = [content];
             this.setState({annotations: annotations});
             this.translate();
+            // this.handlePopulate();
           })
           .catch((error) => {
             console.error(error);
@@ -199,6 +220,7 @@ class Dbpedia extends Component {
         });
         return null;
       });
+
     })
     .catch((error) => {
       console.error(error);
@@ -206,44 +228,65 @@ class Dbpedia extends Component {
 
   }
 
+  isLoggedIn() {
+    return this.isAuthenticated() && !!this.props.profile;
+  }
+
 
 
   render() {
     let note_cards = this.state.modal_notes;
-    return (
-      <div className="FrontPage">
+    const userDisplay = this.isLoggedIn()
+      ? (
+        <div>
         <div className="field">
           <label className="label">Enter Text</label>
         </div>
         <div className="field">
           <form onSubmit={this.dbpedia}>
             <div className="field">
-              <textarea className="textarea" name="textInput"></textarea>
+              <textarea className="textarea" value={this.state.text} name="textInput"></textarea>
             </div>
             <div className="field">
-              <input className="button" type="submit" value="Transmutinate"/>
+              <input className="button is-but" type="submit" value="Generate Notes"/>
+              <button className="button is-but" onClick={this.handlePopulate}>Populate Notes</button>
             </div>
           </form>
           </div>
+          </div>
+      ) : null;
+
+    return (
+
+      <div className="FrontPage">
+        {userDisplay}
         <h1 className="title">{this.state.title}</h1>
         <table>
+          <thead>
+            <tr>
+              <th>Original Text</th>
+              <th>Translation</th>
+            </tr>
+          </thead>
           <tbody>
-              <tr className="columns">
-                <th className="column is-one-third">Original Text</th>
-                <th className="column is-one-third">Translation</th>
-                <th className="column is-one-third">Delete</th>
-              </tr>
-            {note_cards.map(note =>
-              <tr className="columns" key={note._id}>
-                <td className="column is-one-third">
-                  <ModalContainer key={note._id} source_text={note.text} translation={note.translation} imgage={note.picture}/>
-                </td>
-                <td className="column is-one-third">
-                  {note.translation}
-                </td>
-                <td className="column is-one-third"><button className="button is-danger" id={note._id} onClick={this.handleDelete}>Delete</button></td>
-              </tr>
-            )}
+          {/*Object.keys(this.props.notes).map((key) => {
+                  return (
+                    <tr key={key}>
+                      <ModalContainer key={key} source_text={key} translation={this.props.notes[key][1]} imgage={this.props.notes[key][0]}/>
+                      <td>{this.props.notes[key][1]}</td>
+                    </tr>
+          )})*/}
+        {note_cards.map(note =>
+            <tr>
+              <td>
+                <ModalContainer key={note._id} source_text={note.text} translation={note.translation} imgage={note.picture}/>
+              </td>
+              <td>
+                {note.translation}
+              </td>
+              <td id={note._id}><a id={note._id} onClick={this.handleDelete}><button id={note._id} className="button is-danger is-small">Delete</button></a></td>
+            </tr>
+        )}
           </tbody>
         </table>
       </div>

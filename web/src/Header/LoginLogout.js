@@ -18,15 +18,20 @@ class LoginLogout extends Component {
     const userDisplay = this.isLoggedIn()
       ? (
         <div className="navbar-item">
+          <a className="myCollect" href="/myCollections">
+            My collections
+          </a>
           <span>{this.props.profile.name}</span>
         </div>
       ) : null;
 
     const loginLogoutButton = this.isLoggedIn()
       ? (
+        <div>
           <button className="button" onClick={this.logout}>
             Log Out
           </button>
+          </div>
       ) : (
         <button className="button" onClick={this.login}>
           Log In
