@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import NoteCardList from '../Collection';
 import ModalContainer from '../ModalContainer';
-import trash from './rubbish-bin.png';
 
 class Dbpedia extends Component {
   constructor(props) {
