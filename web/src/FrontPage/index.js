@@ -5,8 +5,8 @@ import './frontpage.css';
 
 
 class Frontpage extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { isPrivate: false, collectionName:'', collections: '' }
 
     this.handleClick = this.handleClick.bind(this);
@@ -14,6 +14,7 @@ class Frontpage extends Component {
   }
 
   componentDidMount() {
+    console.log("profile is " + JSON.stringify(this.props.profile.nickname));
     fetch('/api/db/collections')
       .then(res => res.json())
       .then(json => {
@@ -37,6 +38,7 @@ class Frontpage extends Component {
   handleClick(event) {
     //call server side to add collection to database
     console.log('Your collection is: ' + this.state.collectionName);
+    console.log("on click name is " + JSON.stringify(this.props.profile.nickname));
 
     fetch('/api/db/newCollection', {
         method: 'POST',
@@ -45,6 +47,7 @@ class Frontpage extends Component {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
+          user: this.props.profile.nickname,
           collectionName: this.state.collectionName,
           isPrivate: this.state.isPrivate
         })

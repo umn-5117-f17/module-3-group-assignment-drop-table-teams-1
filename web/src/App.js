@@ -7,6 +7,7 @@ import FrontPage from './FrontPage';
 import Header from './Header';
 import ProfilePage from './ProfilePage';
 import NewNote from './NewNote';
+import MyCollections from './MyCollections'
 
 class App extends Component {
   constructor(props) {
@@ -39,6 +40,7 @@ class App extends Component {
           <div className="content">
           {withAuth(App)}
           <Route exact path="/" component={props => <FrontPage inputText={this.state.inputText} onUserInput={this.handleUserInput} {... props} {...this.props} />}/>
+          <Route exact path="/myCollections" component={props => <MyCollections inputText={this.state.inputText} onUserInput={this.handleUserInput} {... props} {...this.props} />}/>
           <Route exact path="/NewNote" component={props => <NewNote {... props} {...this.props} />}/>
           {/* send in props for router stuff; send in this.props for auth stuff */}
           <Route path="/api-demo" render={props => <ApiDemoPage {...props} {...this.props} />} />

@@ -38,14 +38,15 @@ class NotecardList extends Component {
             console.log(json);
             var notecards = json.noteCards;
             var collectionTitle = this.props.match.params.collectionId;
-            const noteItems = notecards.map((note) => {
-              <tr>
-                <td>{note.translation}</td>
-                <td id={note._id}><a id={note._id} onClick={this.handleDelete}><img id={note._id} src={trash} alt="delete button"/></a></td>
-              </tr>
-            });
-            this.setState({notes: noteItems});  /*this will cause an invoke of the render() function again */
+            // const noteItems = notecards.map((note) => {
+            //   <tr>
+            //     <td>{note.translation}</td>
+            //     <td id={note._id}><a id={note._id} onClick={this.handleDelete}><img id={note._id} src={trash} alt="delete button"/></a></td>
+            //   </tr>
+            // });
+            // this.setState({notes: noteItems});  /*this will cause an invoke of the render() function again */
             this.setState({title: collectionTitle});
+            this.setState({modal_notes: notecards});
           })
           .catch(function (error) {
             console.log(error);
@@ -81,6 +82,7 @@ class NotecardList extends Component {
 
   render() {
       let note_cards = this.state.modal_notes;
+      <h1>{this.props.notes}</h1>
       return (
           <div className="Collection">
             <h1 className="title">{this.state.title}</h1>
@@ -107,6 +109,7 @@ class NotecardList extends Component {
                   <td>
                     {note.translation}
                   </td>
+                  <td id={note._id}><a id={note._id} onClick={this.handleDelete}><img id={note._id} src={trash} alt="delete button"/></a></td>
                 </tr>
             )}
               </tbody>

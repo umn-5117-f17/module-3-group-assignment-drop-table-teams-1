@@ -5,16 +5,15 @@ import './MyCollection.css';
 
 
 class MyCollections extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = { isPrivate: false, collectionName:'', collections: '' }
 
-    this.handleClick = this.handleClick.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
   }
 
   componentDidMount() {
-    fetch('/api/db/myCollections')
+    console.log("profile is " + JSON.stringify(this.props.profile.nickname));
+    fetch('/api/db/myCollections/'+ this.props.profile.nickname)
       .then(res => res.json())
       .then(json => {
         console.log(json);
@@ -34,82 +33,14 @@ class MyCollections extends Component {
       });
   }
 
-  handleClick(event) {
-    //call server side to add collection to database
-    console.log('Your collection is: ' + this.state.collectionName);
-
-    fetch('/api/db/newCollection', {
-        method: 'POST',
-        headers: {
-          'Accept': 'application/json',
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          collectionName: this.state.collectionName,
-          isPrivate: this.state.isPrivate
-        })
-      }).then(
-        fetch('/api/db/myCollections')
-          .then(res => res.json())
-          .then(json => {
-            console.log(json);
-            var collects = json.collections;
-            const collectItems = collects.map((collect) =>
-
-            <div class="column is-one-third" id={collect.name}>
-            <a href={"/Collection/" + collect.name} className="box">
-              <p>{collect.name}</p>
-            </a>
-            </div>
-                );
-            this.setState({collections: collectItems});  /*this will cause an invoke of the render() function again */
-          })
-          .catch(function (error) {
-            console.log(error);
-          })
-      );
-      event.preventDefault();
-  }
-
-  handleInputChange(event) {
-  const target = event.target;
-  const value = target.type === 'checkbox' ? target.checked : target.value;
-  const name = target.name;
-
-  this.setState({
-    [name]: value
-  });
-}
 
   render() {
     console.log("this will print twice");
+
     if (this.state.collections) {
       return (
           <div className="CollectionHomePage">
-          <h1 className="title">Public Collections Available</h1>
-          <div className="addCollection box">
-            <form>
-              <label>
-                <input
-                  className="newCollectInput"
-                  placeholder="New Collection"
-                  name="collectionName"
-                  type="text"
-                  onChange={this.handleInputChange}/>
-              </label>
-              <label>
-                Is private:
-                <input
-                  className="checkBox"
-                  name="isPrivate"
-                  type="checkbox"
-                  checked={this.state.isPrivate}
-                  onChange={this.handleInputChange} />
-              </label>
-              <button className="submit button is-small is-info newColBut" onClick={this.handleClick}>Add</button>
-              <br/>
-            </form>
-          </div>
+          <h1 className="title">My Collections</h1>
           <div class="columns is-multiline">
             {this.state.collections}
           </div>

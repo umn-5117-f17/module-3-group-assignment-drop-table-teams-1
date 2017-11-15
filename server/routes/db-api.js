@@ -32,8 +32,9 @@ router.get('/notecards/:collect', function(req, res) {
 
 router.post('/newCollection', function(req, res) {
   console.log("in new collection server");
-   // console.log(req.user);
+    console.log(req.body.user);
   var newItem = {
+    user: req.body.user,
     privacy: req.body.isPrivate,
     name: req.body.collectionName,
     star: false,
@@ -48,26 +49,47 @@ router.post('/newCollection', function(req, res) {
 
 router.post('/newNote', function(req,res) {
   console.log("in new note server");
+  //console.log(req.body);
+var keys = Object.keys( req.body.notes );
+    console.log(req.body.notes[keys[0]])
+  console.log(req.body);
+  var keyWord = keys[0];
+      var i =0;
+      while(i<keys.length) {
+        var newItem = {
+          star: false,
+          collection: req.body.Id,
+          text: keys[i],
+          translation: req.body.notes[keys[i]][1],
+          picture: req.body.notes[keys[i]][0],
+          originalLanguage: "undefined",
+          endingLanguage: "undefined"
+        }
+        console.log(newItem);
+        i++;
+        req.db.collection('Notecards').insertOne(newItem, function(err, results) {
 
-  var newItem = {
-    star: false,
-    collection: req.body.collection,
-    text: req.body.text,
-    translation: req.body.translation,
-    picture: req.body.picture,
-    originalLanguage: req.body.originalLanguage,
-    endingLanguage: req.body.endingLanguage
-  }
-
-  req.db.collection('Notecards').insertOne(newItem, function(err, results) {
-    //res.status(200).send('success');
-  });
+        })
+      }
+  // var newItem = {
+  //   star: false,
+  //   collection: req.body.collection,
+  //   text: req.body.text,
+  //   translation: req.body.translation,
+  //   picture: req.body.picture,
+  //   originalLanguage: req.body.originalLanguage,
+  //   endingLanguage: req.body.endingLanguage
+  // }
+  //
+  // req.db.collection('Notecards').insertOne(newItem, function(err, results) {
+  //   //res.status(200).send('success');
+  // });
 });
 
 router.get('/collections', function(req, res) {
   console.log("in the server collections");
 
-  req.db.collection('Collections').find().toArray(function(err, results) {
+  req.db.collection('Collections').find({"privacy": false}).toArray(function(err, results) {
     // console.log(results);
     res.send({collections: results});
   });
@@ -82,13 +104,14 @@ router.post('/deleteNote', function(req, res) {
     });
 })
 
-router.get('/myCollections', function(req, res) {
+router.get('/myCollections/:nickName', function(req, res) {
+  var collectionUser = req.params.nickName;
   console.log("in the server collections");
-  console.log(req.user);
-  // req.db.collection('Collections').find({user: req.user.nickname}).toArray(function(err, results) {
+  console.log(collectionUser);
+  req.db.collection('Collections').find({"user": collectionUser}).toArray(function(err, results) {
     // console.log(results);
-    // res.send({collections: results});
-  // });
+    res.send({collections: results});
+  });
 });
 
 // checkJwt middleware will enforce valid authorization token
