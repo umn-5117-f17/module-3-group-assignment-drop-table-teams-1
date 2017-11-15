@@ -16,7 +16,7 @@ class ModalContainer extends Component {
   }
 
   componentDidMount() {
-    let tmp_note = this.props.note_content;
+    // let tmp_note = this.props.note_content;
     const src_txt = this.props.source_text;
     const trans = this.props.translation;
     const img_src = this.props.imgage;
@@ -44,7 +44,7 @@ class ModalContainer extends Component {
        <Modal isOpen={this.state.showModal} onClose={this.handleCloseModal}>
          <span className = "title" >{this.state.source_text}</span>
          <h1 className = "title" >{this.state.translation}</h1> <p><button className="button is-link" onClick={this.handleCloseModal}>Close</button></p>
-          <img src={this.state.image_url} alt="oops, we couldn't find this image on wikipedia!"></img>
+          <img src={this.state.image_url} alt="oops, we couldn't find it on wikipedia!"></img>
           <br></br>
        </Modal>
       </div>
