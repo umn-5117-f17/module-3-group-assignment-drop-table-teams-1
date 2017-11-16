@@ -4,14 +4,16 @@ CSCI 5117, Fall 2017, [assignment description](https://docs.google.com/document/
 
 ## App Info:
 
-* Team Name: TODO
-* App Name: TODO
-* App Link: <https://TODO.herokuapp.com/>
+* Team Name: DROP TABLE teams;--
+* App Name: Transmutinator
+* App Link: <https://powerful-coast-99787.herokuapp.com/>
 
 ### Students
 
-* First Last, x500@umn.edu
-* ...
+* Connor McCrory, mccro016
+* Michael Wang, wang4860
+* Benji Fischman, fisch885
+* Aishwarya Gune, gune0016
 
 
 ## Key Features
@@ -19,7 +21,9 @@ CSCI 5117, Fall 2017, [assignment description](https://docs.google.com/document/
 **Describe the most challenging features you implemented
 (one sentence per bullet, maximum 4 bullets):**
 
-* ...
+* Extracting key words from paragraph text using dbpedia API
+* utilizing components to reuse code and transfering data between them
+* Getting the state to change while also updating mongodb at the same time, often fixed by setting state to a pull from the database
 
 
 ## Screenshots of Site
@@ -27,7 +31,10 @@ CSCI 5117, Fall 2017, [assignment description](https://docs.google.com/document/
 **[Add a screenshot of each key page (maximum 4)](https://stackoverflow.com/questions/10189356/how-to-add-screenshot-to-readmes-in-github-repository)
 along with a very brief caption:**
 
-![](https://media.giphy.com/media/Adqe9XUP3x9LO/giphy.gif)
+![](https://i.imgur.com/QvtQHNr.jpg)
+![](https://i.imgur.com/aSXlXYD.jpg)
+![](https://i.imgur.com/6x8cPb9.jpg)
+
 
 
 ## External Dependencies
@@ -36,7 +43,8 @@ along with a very brief caption:**
 Please do not document required libraries (e.g., Express, Bulma).**
 
 * Library or service name: description of use
-* ...
+* dbpedia key word extractions API
+* google translate api to translate key words
 
 **If there's anything else you would like to disclose about how your project
 relied on external code, expertise, or anything else, please disclose that
