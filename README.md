@@ -32,8 +32,10 @@ CSCI 5117, Fall 2017, [assignment description](https://docs.google.com/document/
 along with a very brief caption:**
 
 ![](https://i.imgur.com/QvtQHNr.jpg)
+![](https://i.imgur.com/ZH9kCCv.jpg)
 ![](https://i.imgur.com/aSXlXYD.jpg)
 ![](https://i.imgur.com/6x8cPb9.jpg)
+![](https://i.imgur.com/Q5mLTVD.jpg)
 
 
 
